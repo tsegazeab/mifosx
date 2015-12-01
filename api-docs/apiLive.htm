@@ -90,7 +90,7 @@
 <body>
 	<div id="page-wrapper">
 		<div id="flybar">
-			<div id="nav-logo">1.26.0.RELEASE</div>
+			<div id="nav-logo">15.09.4.RELEASE</div>
 			<div class="flybar-nav">
 				<h2 class="flybar-button">Overview</h2>
 				<div class="flybar-menu-overview">
@@ -104,6 +104,8 @@
 	<li><a href="#dates_and_numbers">Updating Dates and Numbers</a></li>
 	<li><a href="#field_descriptions">Field Descriptions</a></li>
 	<li><a href="#authentication_overview">Authentication Overview</a></li>
+	<li><a href="#authentication_basicauth">Authentication HTTP Basic</a></li>
+	<li><a href="#authentication_oauth">Authentication Oauth2</a></li>
 	<li><a href="#errors">Errors</a></li>
 	<li><a href="#batch_api">Batch API</a></li>
 	<li><a href="#fullapi_matrix">Full API Matrix</a></li>
@@ -381,6 +383,63 @@
 								<td></td>
 								<td></td>
 							</tr>
+							<tr>
+								<td><a href="#client_charge">Client Charge</a></td>
+								<td>clients/{clientId}/charges</td>
+								<td><a href="#add_clientCharge">Add Client Charge</a></td>
+								<td><a href="#list_clientCharges">List Client Charges</a></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>clients/{clientId}/charges/{clientChargeId}</td>
+								<td></td>
+								<td><a href="#clientcharges_retrieve">Retrieve a Client Charge</a></td>
+								<td></td>
+								<td><a href="#delete_clientCharge">Delete a Client Charge</a></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>							
+								<td>clients/{clientId}/charges/{clientChargeId}?command=pay</td>
+								<td><a href="#pay_clientCharge">Pay a Client Charge</a></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>clients/{clientId}/charges/{clientChargeId}?command=waive</td>
+								<td><a href="#waive_clientCharge">Waive a Client Charge</a></td>							
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td><a href="#client_transactions">Client Transactions</td>
+								<td>clients/{clientId}/transactions</td>
+								<td><a href="#list_clientTransactions">List Client Transactions</a></td>			
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>clients/{clientId}/transactions/{transactionId}?command=undo</td>
+								<td><a href="#revert_clientCharge">Undo a Client Transaction</a></td>
+								<td><a href="#clienttransactions_retrieve">Retrieve a Client Transaction</a></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							
 						</table>
 					</div>
 				</div>
@@ -1053,6 +1112,14 @@
                                 <td></td>
                                 <td></td>
                             </tr>
+							 <tr>
+                                <td></td>
+                                <td>loans/{loanId}/transactions?command=prepayLoan</td>
+                                <td><a href="#loans_transaction_pre_close_loan">Loan Pre-Closure transaction template</a></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
 							<tr>
                                 <td></td>
                                 <td>loans/{loanId}/transactions?command=recoverypayment</td>
@@ -1183,7 +1250,7 @@
 			</div>
 
 			<div class="flybar-nav">
-				<h2 class="flybar-button">Group & Collection Sheet</h2>
+				<h2 class="flybar-button">Groups</h2>
 				<div id="toc-menu-loan" class="flybar-menu">
 					<div class="tocMatrix">
 						<table class=matrixHeading>
@@ -1789,6 +1856,26 @@
 								<td></td>
 							</tr>
 							<tr>
+								<td><a href="#client_images">Staff Images</a></td>
+								<td>staff/{staffId}/images</td>
+								<td><a href="#client_images_create">Upload an Image for a Staff Member (as  DATA URI)</a></td>
+								<td><a href="#client_images_retrieve">Get Staff Image (DATA URI)</a></td>
+								<td><a href="#client_images_update">Update Staff Image (DATA URI)</a></td>
+								<td><a href="#client_images_delete">Delete Staff Image</a></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td><a href="#client_images_create_form">
+									Upload an Image for a Staff Member (Multi-part form data)</a>
+								</td>
+								<td><a href="#client_images_retrieve_binary">Get Staff Image (Binary file)</a></td>
+								<td><a href="#client_images_update_form">
+									Update Staff Image (Multi-part form data)</a>
+								</td>
+								<td></td>
+							</tr>
+							<tr>
 								<td><a href="#charges">Charges</a></td>
 								<td>charges</td>
 								<td><a href="#charges_create">Create a Charge</a></td>
@@ -1846,11 +1933,17 @@
 							</tr>
 							<tr>
 								<td><a href="#workingdays">Working days</a></td>
+								<td>workingdays</td>
+								<td><a href="#workingdays_list">List workingdays</a></td>
+							    <td><a href="#workingdays_template">Working days template</a></td>
 								<td></td>
 								<td></td>
+							</tr>
+							<tr>
 								<td></td>
+								<td>workingdays/{workingdaysId}</td>
 								<td></td>
-								<td></td>
+								<td><a href="#workingdays_update">Update a workingdays</a></td>
 							</tr>
 							<tr>
 								<td><a href="#templates">User Generated Documents</a></td>
@@ -1899,6 +1992,103 @@
 								<td><a href="#interestrateslab_retrieve">Retrieve a Slab</a></td>
 								<td><a href="#interestrateslab_update">Update a Slab</a></td>
 								<td><a href="#interestrateslab_delete">Delete a Slab</a></td>
+							</tr>
+							<tr>
+								<td><a href="#tellercashmgmt">Teller Cash Management</a></td>
+								<td>tellers</td>
+								<td><a href="#createtellers">Create Teller</a></td>
+								<td><a href="#listtellers">List Tellers</a></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>tellers/{tellerId}</td>
+								<td></td>
+								<td><a href="#findtellers">Find Teller</a></td>
+								<td><a href="#updatetellers">Update Teller</a></td>
+								<td><a href="#deletetellers">Delete Teller</a></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>tellers/{tellerId}/cashiers</td>
+								<td><a href="#createcashier">Create Cashier</a></td>
+								<td><a href="#findallcashiers">Retrieve Cashier</a></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>tellers/{tellerId}/cashiers/{cashierId}</td>
+								<td></td>
+								<td><a href="#findaonecashier">Find Cashier</a></td>
+								<td><a href="#updatecashier">Update Cashier</a></td>
+								<td><a href="#deletecashier">Delete Cashier</a></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>tellers/{tellerId}/cashiers/template</td>
+								<td></td>
+								<td><a href="#updatecashier">Retrieve Cashier Template</a></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>tellers/{tellerId}/cashiers/{cashierId}/allocate</td>
+								<td><a href="#allocateCashToCashier">Allocate Cash To Cashier</a></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>tellers/{tellerId}/cashiers/{cashierId}/settle</td>
+								<td><a href="#settleCashFromCashier">Settle Cash From Cashier</a></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>tellers/{tellerId}/cashiers/{cashierId}/transactions</td>
+								<td></td>
+								<td><a href="#transactionsForCashier">Retrieve Cashier Transactions</a></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>tellers/{tellerId}/cashiers/{cashierId}/summaryandtransactions</td>
+								<td></td>
+								<td><a href="#getTransactionsWtihSummaryForCashier">Retrieve Cashier Transactions With Summary</a></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>tellers/{tellerId}/cashiers/{cashierId}/transactions/template</td>
+								<td></td>
+								<td><a href="#retrieveCashierTxnTemplate">Retrieve Cashier Transaction Template</a></td>
+								<td></td>
+								<td></td>
+							</tr>
+
+							<tr>
+								<td><a href="#paymenttype">Payment Type</a></td>
+								<td>paymenttypes</td>
+								<td><a href="#create_paymenttype">Create Payment Type</a></td>
+								<td><a href="#paymenttype_list">List Payment Types</a></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>paymenttypes/{paymentTypeId}</td>
+								<td></td>
+								<td><a href="#paymenttype_retrieve">Retrieve Payment Type</a></td>
+								<td><a href="#paymenttype_update">Update Payment Type</a></td>
+								<td><a href="#paymnettype_delete">Delete Payment Type</a></td>
 							</tr>
 
 						</table>
@@ -1953,10 +2143,34 @@
 									</table></td>
 							</tr>
 							<tr>
-								<td><a href="#authentication">Authentication</a></td>
+								<td><a href="#authenticationbasic">Authentication HTTP Basic</a></td>
 								<td>authentication</td>
-								<td><a href="#authenticate_request">Verify Authentication</a></td>
+								<td><a href="#authenticate_request_basic">Verify Authentication</a></td>
 								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td><a href="#authenticationoauth">Authentication Oauth2</a></td>
+								<td>oauth/token</td>
+								<td><a href="#oauth">OAuth2 Access and refresh Token Request</a></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td><a href="#oauth_access_token_req">OAuth2 Access Token Request from refresh token</a></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>authenticated user</td>
+								<td></td>
+								<td><a href="#userdetails_request">Fetch Authenticated user details</a></td>
 								<td></td>
 								<td></td>
 							</tr>
@@ -2024,6 +2238,14 @@
 								<td></td>
 								<td><a href="#permissions_list">List Application Permissions</a></td>
 								<td><a href="#permissions_update">Enable/Disable Permissions for Maker Checker</a></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td><a href="#password_preferences">Password preferences</a></td>
+								<td>passwordpreferences</td>
+								<td><a href=""></a></td>
+								<td><a href="#password_preferences_list">Get Password Preferences</a></td>
+								<td><a href="#password_preferences_update">Update Password Preferences</a></td>
 								<td></td>
 							</tr>
 						</table>
@@ -2254,6 +2476,16 @@
 								<td><a href="#suspend_scheduler">Suspend a scheduler service</a></td>
 								<td></td>
 								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td><a href="#external_services">External Services</a></td>
+								<td>externalservice/{servicename}</td>
+								<td></td>
+								<td><a href="#configs_externalService_retrieve">Retrieve
+										a external service configuration</a></td>
+								<td><a href="#configs_externalService_update">Update
+										external service Configuration</a></td>
 								<td></td>
 							</tr>
 						</table>
@@ -2833,17 +3065,38 @@
 				<div class="method-description">
 					<h3>Authentication Overview</h3>
 					<p>
-						Authentication to the API occurs via <a
+						Authentication to the API can be configured to be supported via <a
 							href="http://en.wikipedia.org/wiki/Basic_access_authentication">HTTP
-							Basic Auth</a>.
+							Basic Auth</a> or <a href="http://tools.ietf.org/html/rfc6749">OAuth2</a>.
 					</p>
 
+					<p>
+						Default authentication is using HTTP Basic Auth. Oauth2 can be enabled by using <i>-Psecurity=oauth</i> option on gradle build command , refer
+						the platform setup <a href="https://github.com/openMF/mifosx/wiki/Launching-platform-server-locally-from-the-command-line#choosing-authentication-mechanism"> wiki</a> for additional details. 
+					</p>
 					<p>
 						The platform has been configured to reject plain HTTP requests and
 						to expect all API requests to be made over <a
 							href="http://en.wikipedia.org/wiki/HTTP_Secure">HTTPS</a>. All
 						requests must be authenticated.
 					</p>
+				</div>
+				<div class="method-example">
+
+					</div>
+			</div>
+
+			<a id="authentication_basicauth" name="authentication_basicauth"
+				class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h3>Authentication HTTP Basic</h3>
+					<p>
+						Authentication to the API occurs via <a
+							href="http://en.wikipedia.org/wiki/Basic_access_authentication">HTTP
+							Basic Auth</a>.
+					</p>
+
 				</div>
 				<div class="method-example">
 <code>
@@ -2892,6 +3145,63 @@ function executeAjaxRequest(url, verbType, jsonData, basicAuthKey, successFuncti
 					</div>
 			</div>
 
+			<a id="authentication_oauth" name="authentication_oauth"
+				class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h3>Authentication Oauth2</h3>
+					<p>
+						Authentication to the API occurs via <a href="http://tools.ietf.org/html/rfc6749">OAuth2</a>. 'Resource Owner Password Credentials Grant' type is used.
+					</p>
+
+				</div>
+				<div class="method-example">
+<code>
+// A Javascript/Jquery example of how to login to Mifos X and use its api.
+// Typically, the javascript application would
+// 1) Display a login page to retrieve the username and password.
+// 2) Send the username, password, client_id , grant_type and client_secret to a function
+//    such as getOauthToken below which sets the HTTP bearer Auth key.
+// 3) The HTTP bearer Auth key is used in all subsequent requests
+// (see the function executeAjaxRequest below).
+
+function getOauthToken(username, password) {
+
+	var jqxhr = $.ajax({
+		url : "/mifosng-provider/api/oauth/token?username=" + credentials.username + "&password=" + credentials.password +"&client_id=community-app&grant_type=password&client_secret=123,
+		type : 'POST',
+		contentType : "application/json; charset=utf-8",
+		dataType : 'json',
+		data : "{}",
+		cache : false,
+		success : function(data, textStatus, jqXHR) {
+			authKey = data.access_token;
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			//error processing
+		}
+	});
+}
+
+function executeAjaxRequest(url, verbType, jsonData, authKey, successFunction, errorFunction) {
+	var jqxhr = $.ajax({
+		url : url,
+		type : verbType, //POST, GET, PUT or DELETE
+		contentType : "application/json; charset=utf-8",
+		dataType : 'json',
+		data : jsonData,
+		cache : false,
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader("Authorization", "bearer " + authKey);
+		},
+		success : successFunction,
+		error : errorFunction
+	});
+}
+</code>
+					</div>
+			</div>
+			
 			<a id="batch_api" name="batch_api" class="old-syle-anchor">&nbsp;</a>
 			<div class="method-section">
 				<div class="method-description">
@@ -4088,6 +4398,11 @@ GET https://DomainName/api/v1/clients/{clientId}
 							String <span>optional</span>
 						</dd>
 						<dd>Use an sql fragment valid for the underlying client schema to filter results. e.g. display_name like %K%</dd>
+						<dt>orphansOnly</dt>
+						<dd>
+							Boolean <span>optional</span>, defaults to false
+						</dd>
+						<dd>Use orphansOnly as true to list clients which are not associated to any group/parent.</dd>
 					</dl>
 					<p>Example Requests:</p>
 					<div class=apiClick>clients</div>
@@ -4590,12 +4905,12 @@ No Request Body:
 			<a id="client_images" name="client_images" class="old-syle-anchor">&nbsp;</a>
 			<div class="method-section">
 				<div class="method-description">
-					<h3>Client Images</h3>
+					<h3>Images</h3>
 					<p>The current API provides support for the addition of a single
-					image for a Client<br/>
+					image for entities like Client (URL pattern <i>/clients</i>) and Staff (URL pattern <i>/staff</i>)<br/>
 					Allowed formats: JPEG (.jpg or .jpeg), GIF (.gif) and PNG (.png)
 					</p>
-					<p> The API supports two different Approaches for manipulating Client Images
+					<p> The API supports two different Approaches for manipulating Images
 					 <ul>
 					 	<li><a href="http://en.wikipedia.org/wiki/Data_URI_scheme" target="_blank"> Data URI's: </a>
 					  For easier manipulation by Javascript clients etc in supported Browsers.
@@ -4612,10 +4927,11 @@ No Request Body:
 				class="old-syle-anchor">&nbsp;</a>
 			<div class="method-section">
 				<div class="method-description">
-					<h4>Get Client Image (DATA URI)</h4>
-					<p>Optional arguments are identical to those of <a href="#client_images_retrieve_binary">Get Client Image (Binary file)</a></p>
+					<h4>Get Entity Image (DATA URI)</h4>
+					<p>Optional arguments are identical to those of <a href="#client_images_retrieve_binary">Get Image associated with an Entity (Binary file)</a></p>
 					<p>Example Requests:</p>
 					<div class=apiClick>clients/1/images</div>
+					<div class=apiClick>staff/1/images</div>
 					<br>
 				</div>
 				<div class="method-example">
@@ -4638,7 +4954,7 @@ gAEAOg13B6R/SAgAAAAASUVORK5CYII=
 				class="old-syle-anchor">&nbsp;</a>
 			<div class="method-section">
 				<div class="method-description">
-					<h4>Get Client Image (Binary file)</h4>
+					<h4>Get Image associated with an Entity (Binary file)</h4>
 					<h5>Optional Arguments</h5>
 					<dl class="argument-list">
 						<dt>output</dt>
@@ -4672,7 +4988,7 @@ GET https://DomainName/api/v1/clients/{clientId}/images
 Accept: application/octet-stream
 					</code>
 					<code class="method-request">
-POST clients/1/images
+GET clients/1/images
 Accept: application/octet-stream
 					</code>
 					<code class="method-response">
@@ -4684,7 +5000,7 @@ Accept: application/octet-stream
 			<a id="client_images_create" name="client_images_create" class="old-syle-anchor">&nbsp;</a>
 			<div class="method-section">
 				<div class="method-description">
-					<h4>Upload an Image for a Client (Data URI)</h4>
+					<h4>Upload an Image for an Entity (Data URI)</h4>
 				</div>
 				<div class="method-example">
 					<code class="method-declaration">
@@ -4712,7 +5028,7 @@ P9/AFGGFyjOXZtQAAAAAElFTkSuQmCC
 			<a id="client_images_create_form" name="client_images_create_form" class="old-syle-anchor">&nbsp;</a>
 			<div class="method-section">
 				<div class="method-description">
-					<h4>Upload an Image for a Client (Multi-part Form data)</h4>
+					<h4>Upload an Image for an Entity (Multi-part Form data)</h4>
 					<table class=matrixHeading>
 						<tr class="matrixHeadingBG">
 							<td><div class="mifosXHeading2">Mandatory Fields</div></td>
@@ -4752,7 +5068,7 @@ Request Body: <i>Not shown</i>
 			<a id="client_images_update" name="client_images_update" class="old-syle-anchor">&nbsp;</a>
 			<div class="method-section">
 				<div class="method-description">
-					<h4>Update a Client Image (Data URI)</h4>
+					<h4>Update a Image associated with an Entity (Data URI)</h4>
 				</div>
 				<div class="method-example">
 					<code class="method-declaration">
@@ -4780,7 +5096,7 @@ P9/AFGGFyjOXZtQAAAAAElFTkSuQmCC
 			<a id="client_images_update_form" name="client_images_update_form" class="old-syle-anchor">&nbsp;</a>
 			<div class="method-section">
 				<div class="method-description">
-					<h4>Update a Client Image (Multi-part Form data)</h4>
+					<h4>Update an Entity's Image (Multi-part Form data)</h4>
 					<table class=matrixHeading>
 						<tr class="matrixHeadingBG">
 							<td><div class="mifosXHeading2">Mandatory Fields</div></td>
@@ -4813,7 +5129,7 @@ Request Body: <i>Not shown</i>
 			<a id="client_images_delete" name="client_images_delete" class="old-syle-anchor">&nbsp;</a>
 			<div class="method-section">
 				<div class="method-description">
-					<h4>Delete a Client Image</h4>
+					<h4>Delete an Entity's Image</h4>
 				</div>
 				<div class="method-example">
 					<code class="method-declaration">
@@ -7051,6 +7367,11 @@ DELETE groups/2
 							String <span>optional</span>
 						</dd>
 						<dd>Use an sql fragment valid for the underlying group schema to filter results. e.g. display_name like %K%</dd>
+						<dt>orphansOnly</dt>
+						<dd>
+							Boolean <span>optional</span>, defaults to false
+						</dd>
+						<dd>Use orphansOnly as true to list groups which are not associated to any center/parent.</dd>
 					</dl>
 					<p>Example Requests:</p>
 					<div class=apiClick>groups</div>
@@ -7334,6 +7655,13 @@ An enumeration that indicates the type of transaction processing strategy to be 
 							<td class=fielddesc>Specifies rest frequency start date for interest recalculation. This date must be before or equal to disbursement date
 							</td>
 						</tr>
+						<tr class=alt>
+							<td>recalculationCompoundingFrequencyDate</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies compounding frequency start date for interest recalculation. This date must be equal to disbursement date
+							</td>
+						</tr>
 					</table>
 				</div>
 			</div>
@@ -7509,6 +7837,11 @@ GET https://DomainName/api/v1/loans/template?templateType=individual&clientId=1&
       "code": "interestRecalculationCompoundingMethod.fee",
       "value": "Fee"
     },
+	"recalculationCompoundingFrequencyType": {
+		    "id":1,
+			"code":"interestRecalculationFrequencyType.same.as.repayment.period",
+			"value":"Same as repayment period"
+	},
     "rescheduleStrategyType": {
       "id": 2,
       "code": "loanRescheduleStrategyMethod.reduce.number.of.installments",
@@ -8468,6 +8801,14 @@ Request Body:
 							<td>recalculationRestFrequencyDate</td>
 						</tr>
 					</table>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Additional Mandatory Fields if interest recalculation with interest/fee compounding is enabled for product and compounding frequency not same as repayment period</div></td>
+						</tr>
+						<tr class=alt>
+							<td>recalculationCompoundingFrequencyDate</td>
+						</tr>
+					</table>
 					<br/>
 					<table class=matrixHeading>
 						<tr class="matrixHeadingBG">
@@ -9420,7 +9761,39 @@ Request Body:
                     </code>
                 </div>
             </div>
+			
+			
+			<a id="loans_transaction_pre_close_loan" name="loans_transaction_pre_close_loan" class="old-syle-anchor">&nbsp;</a>
+            <div class="method-section">
+                <div class="method-description">
+					<h4> Pre-Close template</h4>
+                    <p>This Api retrieves pre closure details of loan</p>
+                </div>
+                <div class="method-example">
+                    <code class="method-declaration">
+                        POST https://DomainName/api/v1/loans/{loanId}/transactions?command=prepayLoan   <b>or</b><br/>
+						
+						https://DomainName/api/v1/loans/{loanId}/transactions?command=prepayLoan&dateFormat=dd+MMMM+yyyy&locale=en&transactionDate=02+April+2015
+                    </code>
+                    <code class="method-request">
+                        POST loans/70/transactions?command=prepayLoan
+                        Content-Type: application/json
+                        Request Body:
+                        { }
+                    </code>
+                    <code class="method-response">
 
+		        {
+		          "amount":7765.28,
+				  "principalPortion":7573.76,
+				  "interestPortion":191.52,
+				  "feeChargesPortion":0.00,
+				  "penaltyChargesPortion":0.00
+		        }
+                    </code>
+                </div>
+            </div>
+			
             <a id="loans_transaction_retrieve" name="loans_transaction_retrieve" class="old-syle-anchor">&nbsp;</a>
 			<div class="method-section">
 				<div class="method-description">
@@ -11534,6 +11907,26 @@ An enumeration that indicates the type of transaction processing strategy to be 
 							<span>Example Values:</span>1=Reschedule next repayments, 2=Reduce number of installments, 3=Reduce EMI amount</td>
 						</tr>
 						<tr class=alt>
+							<td>recalculationCompoundingFrequencyType</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies effective date from which the compounding of interest or fee amounts will be considered in recalculation on late payment.<br>
+							<span>Example Values:</span>1=Same as repayment period, 2=Daily, 3=Weekly, 4=Monthly</td>
+						</tr>
+						<tr class=alt>
+							<td>recalculationCompoundingFrequencyInterval</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies compounding frequency interval for interest recalculation.<br>
+						</tr>
+						<tr class=alt>
+							<td>recalculationCompoundingFrequencyDate</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies compounding frequency start date for interest recalculation.<br>
+						</tr>
+						
+						<tr class=alt>
 							<td>recalculationRestFrequencyType</td>
 						</tr>
 						<tr>
@@ -11553,10 +11946,23 @@ An enumeration that indicates the type of transaction processing strategy to be 
 							<td class=fielddesc>Specifies rest frequency start date for interest recalculation.<br>
 						</tr>
 						<tr class=alt>
+							<td>preClosureInterestCalculationStrategy</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies applicable days for interest calculation on pre closure of a loan.<br>
+							<span>Example Values:</span>1=Calculate till pre closure date, 2=Calculate till rest frequency date</td>
+						</tr>
+						<tr class=alt>
 							<td>isArrearsBasedOnOriginalSchedule</td>
 						</tr>
 						<tr>
 							<td class=fielddesc>If Specified as true, arrears will be identified based on original schedule.<br>
+						</tr>
+						<tr class=alt>
+							<td>allowAttributeOverrides</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies if select attributes may be overridden for individual loan accounts.<br>
 						</tr>
 					</table>
 				</div>
@@ -11663,6 +12069,11 @@ GET https://DomainName/api/v1/loanproducts
             "code": "interestRecalculationCompoundingMethod.fee",
             "value": "Fee"
         },
+		"recalculationCompoundingFrequencyType": {
+		    "id":1,
+			"code":"interestRecalculationFrequencyType.same.as.repayment.period",
+			"value":"Same as repayment period"
+		},
         "rescheduleStrategyType": {
             "id": 2,
             "code": "loanRescheduleStrategyMethod.reduce.number.of.installments",
@@ -11672,6 +12083,11 @@ GET https://DomainName/api/v1/loanproducts
 		    "id":1,
 			"code":"interestRecalculationFrequencyType.same.as.repayment.period",
 			"value":"Same as repayment period"
+		},
+		"preClosureInterestCalculationStrategy": {
+		    "id":1,
+			"code":"loanPreClosureInterestCalculationStrategy.tillPreClosureDate",
+			"value":"Till preclose Date"
 		},
 		"isArrearsBasedOnOriginalSchedule" : true
     },
@@ -11775,7 +12191,11 @@ GET https://DomainName/api/v1/loanproducts/template
             "id": 3,
             "code": "loanRescheduleStrategyMethod.reduce.emi.amount",
             "value": "Reduce EMI amount"
-        }
+        },"preClosureInterestCalculationStrategy": {
+		    "id":1,
+			"code":"loanPreClosureInterestCalculationStrategy.tillPreClosureDate",
+			"value":"Till preclose Date"
+		}
     },
   "paymentTypeOptions": [
     {
@@ -11811,6 +12231,18 @@ GET https://DomainName/api/v1/loanproducts/template
       "value": "Months"
     }
   ],
+  "preClosureInterestCalculationStrategyOptions": [
+		{
+		    "id":1,
+			"code":"loanPreClosureInterestCalculationStrategy.tillPreClosureDate",
+			"value":"Till preclose Date"
+		},
+		{
+		    "id":2,
+			"code":"loanPreClosureInterestCalculationStrategy.tillRestFrequencyDate",
+			"value":"Till rest Frequency Date"
+		}
+	],
   "interestRateFrequencyTypeOptions": [
     {
       "id": 2,
@@ -12803,7 +13235,7 @@ GET https://DomainName/api/v1/loanproducts/{productId}
 							numberOfRepaymentVariationsForBorrowerCycle,
 							interestRateVariationsForBorrowerCycle,
 							multiDisburseLoan,maxTrancheCount,
-							outstandingLoanBalance,overdueDaysForNPA,holdGuaranteeFunds, principalThresholdForLastInstalment, accountMovesOutOfNPAOnlyOnArrearsCompletion, canDefineInstallmentAmount, installmentAmountInMultiplesOf
+							outstandingLoanBalance,overdueDaysForNPA,holdGuaranteeFunds, principalThresholdForLastInstalment, accountMovesOutOfNPAOnlyOnArrearsCompletion, canDefineInstallmentAmount, installmentAmountInMultiplesOf, allowAttributeOverrides
 							</td>
 						</tr>
 					</table>
@@ -12841,7 +13273,7 @@ GET https://DomainName/api/v1/loanproducts/{productId}
 							<td><div class="mifosXHeading2">Additional Optional Fields if interest recalculation is enabled(true) </div></td>
 						</tr>
 						<tr class=alt>
-							<td>isArrearsBasedOnOriginalSchedule</td>
+							<td>isArrearsBasedOnOriginalSchedule, preClosureInterestCalculationStrategy</td>
 						</tr>
 					</table>
 					<table class=matrixHeading>						
@@ -12850,6 +13282,23 @@ GET https://DomainName/api/v1/loanproducts/{productId}
 						</tr>
 						<tr class=alt>
 							<td>recalculationRestFrequencyInterval, recalculationRestFrequencyDate</td>
+						</tr>
+					</table>
+					<table class=matrixHeading>						
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Additional Optional Fields if interest recalculation is enabled(true) and interestRecalculationCompoundingMethod is enabled</div></td>
+						</tr>
+						<tr class=alt>
+							<td>recalculationCompoundingFrequencyType</td>
+						</tr>
+					</table>
+					<table class=matrixHeading>						
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Additional Optional Fields if interest recalculation is enabled(true) and interestRecalculationCompoundingMethod is enabled and 
+							recalculationCompoundingFrequencyType is not same as repayment period</div></td>
+						</tr>
+						<tr class=alt>
+							<td>recalculationCompoundingFrequencyInterval, recalculationCompoundingFrequencyDate</td>
 						</tr>
 					</table>
 					<table class=matrixHeading>
@@ -12906,6 +13355,16 @@ Request Body:
 		"maxValue":"20"
 	}
 ],
+"allowAttributeOverrides":
+	{amortizationType : true,	
+	 interestType : true,
+	 transactionProcessingStrategyId : false,
+	 interestCalculationPeriodType : true,
+	 inArrearsTolerance : false,
+	 repaymentEvery : true,
+	 graceOnPrincipalAndInterestPayment : true,
+	 graceOnArrearsAgeing : true},
+	 
 "accountingRule":"2",
 "name":"product 5",
 "shortName":"prd5",
@@ -12932,7 +13391,7 @@ Request Body:
 "daysInYearType":1,
 "isInterestRecalculationEnabled":"false",
 "holdGuaranteeFunds":"false",
-"principalThresholdForLastInstalment":20
+"principalThresholdForLastInstallment":20
 }
 					</code>
 					<code class="method-response">
@@ -12967,6 +13426,7 @@ Request Body:
     "interestRecalculationCompoundingMethod":"0",
     "rescheduleStrategyMethod":"3",
 	"recalculationRestFrequencyType":"1",
+	"preClosureInterestCalculationStrategy":1,
     "accountingRule":"2",
     "fundSourceAccountId":"4",
     "loanPortfolioAccountId":"8",
@@ -13737,6 +14197,37 @@ Request Body:
 					<p>
 						Allow transactions on non-working days is configurable by enabling/disbaling the allow-transactions-on-non_workingday parameter in <a href="#configs_global">Global configurations</a>.
 					</p>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Mandotory Field Descriptions</div></td>
+						</tr>
+						<tr class=alt>
+							<td>recurrence</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Recurrence pattern</td>
+						</tr>
+						<tr class=alt>
+							<td>repaymentRescheduleType</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>repayment reschedule type .Options listed on the schedule for repayments on non-working days
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>extendTermForDailyRepayments</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Extend the term for loans following a daily repayment schedule.Expects boolean value true/false</td>
+						</tr>
+						<tr class=alt>
+							<td>locale</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>locale must be provided.</td>
+						</tr>
+		
+					</table>
 				<table id="nw_repayment_schedule_rule" class=matrixHeading>
 					<tr class="matrixHeadingBG">
 						<td><div class="mifosXHeading2">Schedule for repayments on non-working day</div></td>
@@ -13770,6 +14261,113 @@ Request Body:
 						</td>
 					</tr>
 				</table>
+			</div>
+		</div>
+					<a id="workingdays_template" name="workingdays_template"
+				class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Working Days Template</h4>
+					<p>This is a convenience resource. It can be useful when
+						building maintenance user interface screens for working days.
+					</p>
+					<p>Example Request:</p>
+					<div class=apiClick>workingdays/template</div>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+GET https://DomainName/api/v1/workingdays/template
+					</code>
+					<code class="method-response">
+{
+    "repaymentRescheduleOptions": [
+        {
+            "id": 1,
+            "code": "RepaymentRescheduleType.same.day",
+            "value": "same day"
+        },
+        {
+            "id": 4,
+            "code": "RepaymentRescheduleType.move.to.previous.working.day",
+            "value": "move to previous working day"
+        },
+        {
+            "id": 3,
+            "code": "RepaymentRescheduleType.move.to.next.repayment.meeting.day",
+            "value": "move to next repayment meeting day"
+        },
+        {
+            "id": 2,
+            "code": "RepaymentRescheduleType.move.to.next.working.day",
+            "value": "move to next working day"
+        }
+    ]
+}
+					</code>
+				</div>
+			</div>
+		<a id="workingdays_list" name="workingdays_list" class="old-syle-anchor">&nbsp;</a>
+		<div class="method-section">
+			<div class="method-description">
+				<h4>List Working days</h4>
+				<p>Example Requests:</p>
+				<div class=apiClick>workingdays</div>
+				<br>
+				<br>
+			</div>
+			<div class="method-example">
+				<code class="method-declaration">
+GET https://DomainName/api/v1/workingdays
+				</code>
+				<code class="method-response">
+[
+    {
+        "id": 1,
+        "recurrence": "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,TU,WE,TH,FR",
+        "repaymentRescheduleType": {
+            "id": 4,
+            "code": "RepaymentRescheduleType.move.to.next.working.day",
+            "value": "move to next working day"
+        }
+        "extendTermForDailyRepayments" : true
+    }
+]
+				</code>
+			</div>
+		</div>
+				<a id="workingdays_update" name="workingdays_update" class="old-syle-anchor">&nbsp;</a>
+		<div class="method-section">
+			<div class="method-description">
+				<h4>Update a Working Day</h4>
+				<table class=matrixHeading>
+					<tr class="matrixHeadingBG">
+						<td><div class="mifosXHeading2">Mandatory Fields</div></td>
+					</tr>
+					<tr class=alt>
+						<td>recurrence,repaymentRescheduleType,extendTermForDailyRepayments,locale</td>
+					</tr>
+				</table>
+			</div>
+			<div class="method-example">
+				<code class="method-declaration">
+PUT https://DomainName/api/v1/Workingdays/1
+				</code>
+				<code class="method-request">
+PUT holidays
+Content-Type: application/json
+Request Body:
+{
+"recurrence": "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,TU,WE,TH,SU",
+"locale": "en",
+"repaymentsRescheduledType": 4,
+"extendTermForDailyRepayments": false
+}
+				</code>
+				<code class="method-response">
+{
+"resourceId": 1
+}
+				</code>
 			</div>
 		</div>
 
@@ -15308,6 +15906,16 @@ GET https://DomainName/api/v1/accountnumberformats/template
                "id": 3,
                "code": "accountType.savings",
                "value": "SAVINGS"
+           },
+           {
+               "id": 4,
+               "code": "accountType.center",
+               "value": "CENTER"
+           },
+           {
+               "id": 5,
+               "code": "accountType.group",
+               "value": "GROUP"
            }
        ],
        "prefixTypeOptions":
@@ -15350,6 +15958,22 @@ GET https://DomainName/api/v1/accountnumberformats/template
                    "code": "accountNumberPrefixType.officeName",
                    "value": "OFFICE_NAME"
                }
+           ],
+           "accountType.center":
+           [
+               {
+                   "id": 1,
+                   "code": "accountNumberPrefixType.officeName",
+                   "value": "OFFICE_NAME"
+               }
+           ],
+           "accountType.group":
+           [
+               {
+                   "id": 1,
+                   "code": "accountNumberPrefixType.officeName",
+                   "value": "OFFICE_NAME"
+               },
            ]
        }
     }
@@ -16103,6 +16727,94 @@ POST scheduler?command=stop
 					</code>
 				</div>
 			</div>
+			
+			<a id="external_services" name="external_services" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h3>External Services</h3>
+					<p>External Services Configuration related to set of supported configurations for third party services like Amazon S3 and SMTP:</p>
+					<ol>
+						<li><b>S3 (Amazon S3):</b></li>
+						<li><b>s3_access_key</b> - </li>
+						<li><b>s3_bucket_name</b> - </li>
+						<li><b>s3_secret_key</b> - </li>
+						<br><br>
+						<li><b>SMTP (Email Service):</b></li>
+						<li><b>username</b> - </li>
+						<li><b>password</b> - </li>
+						<li><b>host</b> - </li>
+						<li><b>port</b> - </li>
+						<li><b>useTLS</b> - </li>
+						
+					</ol>
+				</div>
+			</div>
+			
+			<a id="configs_externalService_retrieve" name="configs_externalService_retrieve" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Retrieve External Services Configuration</h4>
+					<p>Returns a external Service configurations based on the Service Name.</p>
+					<p>Service Names supported are S3 and SMTP.</p>
+					<p>Example Requests:</p>
+					<div class=apiClick>externalservice/SMTP</div>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+GET https://DomainName/api/v1/externalservice/{serviceName}
+					</code>
+					<code class="method-response">
+    
+
+    [
+        {
+            "name": "username",
+            "value": "test@mifos.com"
+        },
+        {
+            "name": "password",
+            "value": "XXXX"
+        },
+        {
+            "name": "host",
+            "value": "smtp.gmail.com"
+        },
+        {
+            "name": "port",
+            "value": "25"
+        },
+        {
+            "name": "useTLS",
+            "value": "true"
+        }
+    ]
+
+
+					</code>
+				</div>
+			</div>
+			
+			<a id="config_externalService_update" name="config_externalService_update"
+				class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Update External Service</h4>
+					<p>Updates the external Service Configuration for a Service Name.</p>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+PUT https://DomainName/api/v1/externalservice/{serviceName}
+					</code>
+					<code class="method-request">
+PUT externalservice/S3
+Content-Type: application/json
+{
+	"username" : "test@mifos.org"
+	"password" : "XXXX"
+}				
+				</code>
+				</div>
+			</div>
 
 			<!-- Fund starts here -->
 			<a id="funds" name="funds" class="old-syle-anchor">&nbsp;</a>
@@ -16440,7 +17152,8 @@ Request Body:
 					</code>
 				</div>
 			</div>
-
+			
+			
 <!--Charges section starts here-->
 <a id="charges" name="charges" class="old-syle-anchor">&nbsp;</a>
 <div class="method-section">
@@ -16451,7 +17164,7 @@ Request Body:
 			products. These are typically <b>Fees</b> or <b>Penalties</b>.
 		</p>
 		<p>A <strong><i>Charge</i></strong> on mifos platform is what we use to model both <b>Fees</b> and <b>Penalties</b>.</p>
-		<p>At present we support defining charges for use in both loan and saving products.</p>
+		<p>At present we support defining charges for use with Client accounts and both loan and saving products.</p>
 		<table class=matrixHeading>
 			<tr class="matrixHeadingBG">
 				<td><div class="mifosXHeading2">Field Descriptions</div></td>
@@ -16466,9 +17179,10 @@ Request Body:
 				<td>chargeAppliesTo</td>
 			</tr>
 			<tr>
-				<td class=fielddesc>Enumeration for indicating whether charge is to be applicable for loans or savings.<br/>
+				<td class=fielddesc>Enumeration for indicating whether charge is to be applicable for loans, savings or clients.<br/>
 					1=Loans,
-					2=Savings
+					2=Savings,
+					3=Client
 				<p>Once a charge definiton has been created, this attribute cannot be changed at any point.</p>
 				</td>
 			</tr>
@@ -16576,6 +17290,13 @@ Request Body:
 			</tr>
             <tr>
             	<td class=fielddesc>This field is Optional Used to indicate the recurring(days,weeks,months and Years) charge due date starting on system calculated date for overdue penalty.<br/></td>
+            </tr>
+            <tr class=alt>
+				<td>incomeAccount</td>
+			</tr>
+            <tr>
+            	<td class=fielddesc>This field is Optional and can be used only when a charge is applied to a Client. It indicates the Income or Liability account which gets 
+            	credited when a payment is made on this charge<br/></td>
             </tr>
 		</table>
 	</div>
@@ -19133,7 +19854,6 @@ Content-Type: application/json
 	            <tr><td class=fielddesc><b>Optional</b>: If provided, used along with <i>lockinPeriodFrequencyType</i> to indicate the length of time that the recurring deposit account is 'locked in' and premature closure is not allowed. e.g. <b>2</b> Months</td></tr>
 
 	            <tr class=alt><td>lockinPeriodFrequencyType</td></tr>
-	            <tr><td class=fielddesc><b>Optional</b>: If provided, used along with <i>lockinPeriodFrequency</i> to indicate the length of time that the recurring deposit account is 'locked in' and premature closure is not allowed. 0=Days, 1=Weeks, 2=Months, 3=Years
 	            e.g. 2 <b>Months</b></td></tr>
 
 	            <tr class=alt><td>recurringDepositFrequency</td></tr>
@@ -29856,7 +30576,7 @@ Request Body:
 						<dd>
 							optional, <span>Defaults to HTML.</span>
 						</dd>
-						<dd>Valid Values are HTML, XLS, CSV and PDF for html, Excel,
+						<dd>Valid Values are HTML, XLS, XSLX, CSV and PDF for html, Excel, Excel 2007+,
 							CSV and PDF formats respectively.</dd>
 						<dd>Only applies to Pentaho reports.</dd>
 						<dt>locale</dt>
@@ -29968,12 +30688,12 @@ GET https://DomainName/api/v1/runreports/{reportName}
 			</div>
 
 			<!-- start of authentication api docs -->
-			<a id="authentication" name="authentication" class="old-syle-anchor">&nbsp;</a>
+			<a id="authenticationbasic" name="authenticationbasic" class="old-syle-anchor">&nbsp;</a>
 			<div class="method-section">
 				<div class="method-description">
-					<h3>Authentication</h3>
+					<h3>Authentication HTTP Basic</h3>
 					<p>An API capability that allows client applications to verify
-						authentication details.</p>
+						authentication details using HTTP Basic Authentication.</p>
 					<table class=matrixHeading>
 						<tr class="matrixHeadingBG">
 							<td><div class="mifosXHeading2">Field Descriptions</div></td>
@@ -29992,7 +30712,7 @@ GET https://DomainName/api/v1/runreports/{reportName}
 				</div>
 			</div>
 
-			<a id="authenticate_request" name="authenticate_request" class="old-syle-anchor">&nbsp;</a>
+			<a id="authenticate_request_basic" name="authenticate_request_basic" class="old-syle-anchor">&nbsp;</a>
 			<div class="method-section">
 				<div class="method-description">
 					<h4>Verify authentication</h4>
@@ -30079,6 +30799,269 @@ No Request Body
 				</div>
 			</div>
 
+			<a id="authenticationoauth" name="authenticationoauth" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h3>Authentication Oauth2</h3>
+					<p>An API capability that allows client applications to fetch current user details details using Oauth2.</p>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Field Descriptions</div></td>
+						</tr>
+						<tr class=alt>
+							<td>accessToken</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>HTTP Auth bearer key. See <a
+								href="#authentication_overview">Authentication Overview</a> for
+								an example of its use.
+							</td>
+						</tr>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<a id="oauth" name="oauth" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h3>Authentication via OAuth2</h3>
+					<p>API for requesting OAuth2 access token and refresh token.</p>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Field Descriptions</div></td>
+						</tr>
+						<tr class=alt>
+							<td>grant_type</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Mandatory field.
+							Indicates the requested grant type. Supported values:
+							<span>password</span>.
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>client_id</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Mandatory field.
+							Indicates the client application identity. 
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>client_secret</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Optional field.
+							Indicates the client application password. 
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>username</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Mandatory field.
+							Application User(resource) login name. 
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>password</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Mandatory field.
+							Application User(resource) password. 
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<a id="oauth_request" name="oauth_request" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>OAuth2 Refresh and Access Token Request</h4>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+POST https://DomainName/api/oauth/token?username={username}&password={password}&client_id={clientId}&grant_type={grant_type}&client_secret={client_secret}
+					</code>
+					<code class="method-request">
+POST api/oauth/token?username=mifos&password=password&client_id=community-app&grant_type=password&client_secret=123
+Content-Type: application/json
+No Request Body
+					</code>
+					<code class="method-response">
+{
+	""access_token": "b771987f-82fc-45ba-b521-bfe280c4e603",
+	"token_type": "bearer",
+	"refresh_token":"a2a89b23-8d22-4d90-8585-8f464db433b0",
+	"expires_in": 3599,
+	"scope": "all"
+}
+					</code>
+				</div>
+			</div>
+			
+			
+			<a id="oauth_access_token_req" name="oauth_access_token_req" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h3>Authentication via OAuth2</h3>
+					<p>API for requesting OAuth2 access tokens through oAuth2 refresh tokens.</p>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Field Descriptions</div></td>
+						</tr>
+						<tr class=alt>
+							<td>grant_type</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Mandatory field.
+							Indicates the requested grant type. Supported values:
+							<span>refresh_token</span>.
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>client_id</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Mandatory field.
+							Indicates the client application identity. 
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>client_secret</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Optional field.
+							Indicates the client application password. 
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>refresh_token</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Mandatory field.
+							Application refresh token to generate access token. 
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<a id="oauth_request_with_refresh" name="oauth_request_with_refresh" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>OAuth2 Token Request through Refresh Token</h4>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+POST https://DomainName/api/oauth/token?refresh_token={refresh_token}&client_id={clientId}&grant_type={grant_type}&client_secret={client_secret}
+					</code>
+					<code class="method-request">
+POST api/oauth/token?client_id=community-app&grant_type=refresh_token&client_secret=123&refresh_token=a2a89b23-8d22-4d90-8585-8f464db433b0
+Content-Type: application/json
+No Request Body
+					</code>
+					<code class="method-response">
+{
+	""access_token": "b771987f-82fc-45ba-b521-bfe280c4e643",
+	"token_type": "bearer",
+	"refresh_token":"a2a89b23-8d22-4d90-8585-8f464db433b0",
+	"expires_in": 3599,
+	"scope": "all"
+}
+					</code>
+				</div>
+			</div>
+
+			<a id="userdetails_request" name="userdetails_request" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Fetch authenticated user details </h4>
+					<p>checks the Authentication and returns the set roles and permissions allowed.</p>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+POST https://DomainName/api/v1/userdetails?access_token={access_token}
+					</code>
+					<code class="method-request">
+POST userdetails?access_token=bWlmb3M6cGFzc3dvcmQ=
+Content-Type: application/json
+No Request Body
+					</code>
+					<p>Example response of authenticated user user that is not linked with any staff.</p>
+					<code class="method-response">
+{
+    "username": "mifos",
+    "userId": 1,
+    "accessToken": "bWlmb3M6cGFzc3dvcmQ=",
+    "authenticated": true,
+    "officeId": 1,
+    "officeName": "Head Office",
+    "roles": [
+        {
+            "id": 1,
+            "name": "Super user",
+            "description": "This role provides all application permissions."
+        }
+    ],
+    "permissions": [
+        "ALL_FUNCTIONS"
+    ]
+}
+					</code>
+					<p>Example response of authenticated user that is linked with a staff member and role.</p>
+<code class="method-response">
+{
+    "username": "mifos",
+    "userId": 1,
+    "accessToken": "bWlmb3M6cGFzc3dvcmQ=",
+    "authenticated": true,
+    "officeId": 1,
+    "officeName": "Head Office",
+    "staffId": 1,
+    "staffDisplayName": "Director, Program",
+    "organisationalRole": {
+        "id": 100,
+        "code": "staffOrganisationalRoleType.programDirector",
+        "value": "Program Director"
+    },
+    "roles": [
+        {
+            "id": 1,
+            "name": "Super user",
+            "description": "This role provides all application permissions."
+        }
+    ],
+    "permissions": [
+        "ALL_FUNCTIONS"
+    ]
+}
+</code>
+
+
+
+
+
+					<code class="method-request">
+POST api/oauth/token?username=mifos&password=password&client_id=community-app&grant_type=password&client_secret=123
+Content-Type: application/json
+No Request Body
+					</code>
+					<code class="method-response">
+{
+    "developerMessage": "Invalid authentication details were passed in api request.",
+    "developerDocLink": "https://github.com/openMF/mifosx/wiki/HTTP-API-Error-codes",
+    "httpStatusCode": "401",
+    "defaultUserMessage": "Unauthenticated. Please login.",
+    "userMessageGlobalisationCode": "error.msg.not.authenticated",
+    "errors": []
+}
+					</code>
+				</div>
+			</div>
+			
 			<!-- start of users api docs -->
 			<a id="users" name="users" class="old-syle-anchor">&nbsp;</a>
 			<div class="method-section">
@@ -30112,6 +31095,7 @@ GET https://DomainName/api/v1/users
         "firstname": "App",
         "lastname": "Administrator",
         "email": "demomfi@mifos.org",
+        "passwordNeverExpires": false,
         "staff": {
 		   "id": 1,
 		   "firstname": "Test",
@@ -30203,6 +31187,7 @@ GET https://DomainName/api/v1/users/{userId}
     "firstname": "App",
     "lastname": "Administrator",
     "email": "demomfi@mifos.org",
+    "passwordNeverExpires": true,
     "staff": {
 	 "id": 1,
 	 "firstname": "Test",
@@ -30252,7 +31237,7 @@ GET https://DomainName/api/v1/users/{userId}
 							<td><div class="mifosXHeading2">Optional Fields</div></td>
 						</tr>
 						<tr>
-							<td>staffId</td>
+							<td>staffId,passwordNeverExpires</td>
 						</tr>
 					</table>
 				</div>
@@ -30715,7 +31700,86 @@ Request Body:
 				</div>
 			</div>
 
+			<!-- start of password validation policy api docs -->
+			<a id="password_preferences" name="passwordpreferences" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h3>Password preferences</h3>
+					<p>This API enables management of password policy for user administration.</p>
+					<p>There is no Mifos X functionality for creating a validation policy.  The validation policies come pre-installed.</p>
+					<p>Validation policies may be updated</p>
+				</div>
+			</div>
 
+			<a id="password_preferences_list" name="passwordValidationPolicy_list"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>List Application Password validation policies</h4>
+					<h5>Arguments</h5>
+					<dl class="argument-list">
+
+						</dd>
+					</dl>
+					<p>Example Requests:</p>
+					<div class=apiClick>passwordpreferences</div><br><br>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+GET https://DomainName/api/v1/passwordpreferences/template
+					</code>
+					<code class="method-response">
+[
+{
+"id": 1,
+"description": "Password must be at least 1 character and not more that 50 characters long",
+"active": true,
+"key" : "simple"
+},
+{
+"id": 2,
+"description": "Password must be at least 6 characters, no more than 50 characters long, must include at least one upper case letter, one lower case letter, one numeric digit and no space",
+"active": false,
+"key" : "secure"
+}
+]
+					</code>
+				</div>
+			
+							<div class="method-example">
+					<code class="method-declaration">
+GET https://DomainName/api/v1/passwordpreferences/
+					</code>
+					<code class="method-response">
+{
+"id": 1,
+"description": "Password most be at least 1 character and not more that 50 characters long",
+"active": true,
+"key" : "simple"
+}
+					</code>
+				</div>
+			</div>
+
+			<a id="password_preferences_update" name="passwordValidationPolicy_update" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Update password preferences</h4>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+PUT https://DomainName/api/v1/passwordpreferences/
+					</code>
+					<code class="method-request">
+PUT passwordpreferences
+Content-Type: application/json
+Request Body:
+{
+	"validationPolicyId" : 1,
+}
+					</code>
+				</div>
+			</div>
 			<!-- start of accounting api docs -->
             <a id="glaccounts" name="glaccounts" class="old-syle-anchor">&nbsp;</a>
             <div class="method-section">
@@ -31823,6 +32887,18 @@ No Request Body:
                         <dd>Flag determines whether running balances
                         	to be returned
                         </dd>
+                        <dt>loanId</dt>
+                        <dd>
+                            Integer <span>optional</span>
+                        </dd>
+                        <dd>Provides ability to restrict journal entries based on the loan they are associated with
+                        </dd>
+                        <dt>savingsId</dt>
+                        <dd>
+                            Integer <span>optional</span>
+                        </dd>
+                        <dd>Provides ability to restrict journal entries based on the savings account they are associated with
+                        </dd>
 					</dl>
 					<p>Example Requests:</p>
 					<div class=apiClick>journalentries</div>
@@ -31840,6 +32916,10 @@ No Request Body:
 					<div class=apiClick>journalentries?runningBalance=true</div>
 					<br>
 					<div class=apiClick>journalentries?transactionDetails=true</div>
+					<br>
+					<div class=apiClick>journalentries?loanId=12</div>
+					<br>
+					<div class=apiClick>journalentries?savingsId=24</div>
                 </div>
                 <div class="method-example">
                     <code class="method-declaration">
@@ -32582,7 +33662,11 @@ Request Body:
 							<td rowspan=2><a href="#groups">Group</a></td>
 							<td>Name</td>
 						</td>
-						<tr>
+						<tr class=alt>
+							<td>Account Number</td>
+						</tr>
+						<tr class=alt>
+							<td></td>
 							<td>External Id</td>
 						</td>
 					</table>
@@ -32597,6 +33681,8 @@ Request Body:
 					<div class=apiClick>search?query=000000001</div>
 					<br>
 					<div class=apiClick>search?query=Petra&resource=clients,groups</div>
+					<br>
+					<div class=apiClick>search?query=Petra&resource=clients,groups&exactMatch=true</div>
 					<br>
 					<table class=matrixHeading>
 						<tr class="matrixHeadingBG">
@@ -32619,6 +33705,15 @@ Request Body:
 							</td>
 							<td class=fielddesc>
 								Scoped resources on which search can be performed. If there is no resource parameter passed then search will be performed on all <a href="#search">scoped</a> resources.
+							</td>
+						</tr>
+						<tr>
+							<td>
+								exactMatch
+								<br><i>(non-mandatory)</i>
+							</td>
+							<td class=fielddesc>
+								Scoped resources on which search can be performed. If there is no exactMatch parameter passed then search will be performed for all partial matches <a href="#search">scoped</a> resources.
 							</td>
 						</tr>
 					</table>
@@ -32663,9 +33758,44 @@ GET https://DomainName/api/v1/search?query=000000111
     "entityName": "12-A Flat Loan",
     "entityType": "LOAN",
     "parentId": 65,
-    "parentName": "aaaa aaaaa"
+    "parentName": "aaaa aaaaa",
+    "parentType": "client"
   }
 ]
+					</code>
+					
+					<code class="method-declaration">
+GET https://DomainName/api/v1/search?query=000000001&exactMatch=true
+					</code>
+					<code class="method-response">
+[{
+	"entityId": 1,
+	"entityAccountNo": "000000001",
+	"entityExternalId": "ID_JKZGEXF",
+	"entityName": "Group_Name_HVCU5",
+	"entityType": "GROUP",
+	"parentId": 1,
+	"parentName": "Head Office",
+	"entityStatus": {
+		"id": 300,
+		"code": "groupingStatusType.active",
+		"value": "Active"
+	}
+},
+{
+	"entityId": 1,
+	"entityAccountNo": "000000001",
+	"entityExternalId": "ID_UOZAGPZ",
+	"entityName": "Client_FirstName_KJ5B6 Client_LastName_KDGX",
+	"entityType": "CLIENT",
+	"parentId": 1,
+	"parentName": "Head Office",
+	"entityStatus": {
+		"id": 300,
+		"code": "clientStatusType.active",
+		"value": "Active"
+	}
+}]
 					</code>
 				</div>
 			</div>
@@ -33455,6 +34585,1104 @@ No Request Body:
 
 		<!-- end of interest rate slabs API docs-->
 
+		<!-- start of Teller Cash Management API docs -->
+			<a id="tellercashmgmt" name="tellercashmgmt" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h3>Teller Cash Management</h3>
+					<p>Teller cash management which will allow an organization to manage their cash transactions at branches or head office more effectively.</p>
+				</div>
+			</div>
+			<a id="listtellers" name="listtellers"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>List all tellers</h4>
+					<p>Retrieves list tellers.</p><br>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+						GET https://DomainName/api/v1/tellers
+					</code>
+					<code class="method-response">
+						[
+						{
+						"id": 3,
+						"officeId": 1,
+						"debitAccountId": 0,
+						"creditAccountId": 0,
+						"name": "Teller3",
+						"description": "cash handling",
+						"startDate": [
+						2015,
+						2,
+						1
+						],
+						"status": "ACTIVE",
+						"officeName": "Head Office"
+						},
+						{
+						"id": 2,
+						"officeId": 1,
+						"debitAccountId": 0,
+						"creditAccountId": 0,
+						"name": "Teller2",
+						"description": "abcc",
+						"startDate": [
+						2015,
+						2,
+						19
+						],
+						"endDate": [
+						2015,
+						3,
+						30
+						],
+						"status": "ACTIVE",
+						"officeName": "Head Office"
+						},
+						{
+						"id": 1,
+						"officeId": 1,
+						"debitAccountId": 0,
+						"creditAccountId": 0,
+						"name": "Teller1",
+						"description": "abc",
+						"startDate": [
+						2015,
+						2,
+						20
+						],
+						"status": "ACTIVE",
+						"officeName": "Head Office"
+						},
+						{
+						"id": 4,
+						"officeId": 2,
+						"debitAccountId": 0,
+						"creditAccountId": 0,
+						"name": "Teller4",
+						"description": "cash handling",
+						"startDate": [
+						2015,
+						2,
+						1
+						],
+						"status": "ACTIVE",
+						"officeName": "Office1"
+						}
+						]
+					</code>
+				</div>
+			</div>
+
+			<a id="createtellers" name="createtellers"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Create teller</h4>
+					<p>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Mandatory Fields</div></td>
+						</tr>
+						<tr class=alt>
+							<td>Teller name, OfficeId, Description, Start Date, Status</td>
+						</tr>
+					</table>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Optional Fields</div></td>
+						</tr>
+						<tr class=alt>
+							<td>End Date</td>
+						</tr>
+					</table>
+					</p><br>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+						POST https://DomainName/api/v1/tellers
+					</code>
+					<code class="method-request">
+						POST tellers
+						Content-Type: application/json
+						Request Body:
+						{
+						"officeId":2,
+						"name":"Teller4",
+						"description":"cash handling",
+						"status":300,
+						"locale":"en",
+						"dateFormat":"dd MMMM yyyy",
+						"startDate":"01 February 2015"
+						}
+					</code>
+					<code class="method-response">
+						{
+						"officeId": 2,
+						"resourceId": 5
+						}
+					</code>
+				</div>
+			</div>
+
+			<a id="findtellers" name="findtellers"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Retrieve tellers</h4>
+					<p></p><br>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+						GET https://DomainName/api/v1/tellers/5
+					</code>
+					<code class="method-response">
+						{
+						"id": 5,
+						"officeId": 2,
+						"debitAccountId": 0,
+						"creditAccountId": 0,
+						"name": "Teller5",
+						"description": "cash handling",
+						"startDate": [
+						2015,
+						2,
+						1
+						],
+						"status": "ACTIVE",
+						"officeName": "Office1"
+						}
+					</code>
+				</div>
+			</div>
+
+			<a id="updatetellers" name="updatetellers"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Update teller</h4>
+					<p></p><br>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+						PUT https://DomainName/api/v1/tellers/{tellerId}
+					</code>
+					<code class="method-request">
+						PUT tellers/5
+						Content-Type: application/json
+						Request Body:
+						{
+						"name":"Teller5",
+						"officeId":2,
+						"description":"teller cash handling",
+						"status":300,
+						"endDate":"28 February 2015",
+						"startDate":"01 February 2015",
+						"locale":"en",
+						"dateFormat":"dd MMMM yyyy"
+						}
+					</code>
+					<code class="method-response">
+						{
+						"officeId":2,
+						"resourceId":5,
+						"changes":{
+						"description":"teller cash handling",
+						"endDate":"28 February 2015",
+						"dateFormat":"dd MMMM yyyy",
+						"locale":"en"
+						}
+						}
+					</code>
+				</div>
+			</div>
+
+			<!--<a id="deletetellers" name="deletetellers"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Delete Teller</h4>
+					<p></p>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+DELETE https://DomainName/api/v1/interestratecharts/{chartId}/chartslabs/{slabId}
+					</code>
+					<code class="method-request">
+DELETE interestratecharts/1/chartslabs/1
+Content-Type: application/json
+No Request Body:
+					</code>
+					<code class="method-response">
+						{
+						"resourceId": 1
+						}
+					</code>
+				</div>
+			</div>
+-->
+			<a id="findallcashiers" name="findallcashiers"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>List Cashiers</h4>
+					<p></p><br>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+						GET https://DomainName/api/v1/tellers/{tellerId}/cashiers
+					</code>
+					<code class="method-response">
+						{
+						"tellerId": 1,
+						"tellerName": "Teller1",
+						"officeId": 1,
+						"officeName": "Head Office",
+						"cashiers": [
+						{
+						"id": 1,
+						"tellerId": 1,
+						"staffId": 1,
+						"description": "",
+						"startDate": "Feb 20, 2015 12:00:00 AM",
+						"endDate": "Feb 27, 2015 12:00:00 AM",
+						"isFullDay": true,
+						"startTime": "",
+						"endTime": "",
+						"tellerName": "Teller1",
+						"staffName": "Staff1, Test"
+						}
+						]
+						}
+					</code>
+				</div>
+			</div>
+
+			<a id="createcashier" name="createcashier"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Create Cashiers</h4>
+					<p>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Mandatory Fields</div></td>
+						</tr>
+						<tr class=alt>
+							<td>Cashier/staff, Fromm Date, To Date, Full Day or From time and To time</td>
+						</tr>
+					</table>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Optional Fields</div></td>
+						</tr>
+						<tr class=alt>
+							<td>Description/Notes</td>
+						</tr>
+					</table>
+					</p><br>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+						POST https://DomainName/api/v1/tellers/{tellerId}/cashiers
+					</code>
+					<code class="method-request">
+						POST tellers/1/cashiers
+						{
+						"endDate":"28 February 2015",
+						"description":"Cashier created",
+						"isFullDay":true,
+						"staffId":3,
+						"locale":"en",
+						"dateFormat":"dd MMMM yyyy",
+						"startDate":"01 February 2015"
+						}
+					</code>
+					<code class="method-response">
+						{
+						"resourceId":1,
+						"subResourceId":2
+						}
+					</code>
+				</div>
+			</div>
+
+			<a id="findaonecashier" name="findonecashier"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Retrieve a cashier</h4>
+					<p></p><br>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+						GET https://DomainName/api/v1/tellers/{tellerId}/cashiers/{cashierId}
+					</code>
+					<code class="method-response">
+						{
+						"id": 1,
+						"tellerId": 1,
+						"staffId": 1,
+						"description": "",
+						"startDate": "Feb 20, 2015 12:00:00 AM",
+						"endDate": "Feb 27, 2015 12:00:00 AM",
+						"isFullDay": true,
+						"startTime": "",
+						"endTime": "",
+						"tellerName": "Teller1",
+						"staffName": "Staff1, Test"
+						}
+					</code>
+				</div>
+			</div>
+
+
+			<a id="updatecashier" name="updatecashier"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Update Cashier</h4>
+					<p></p><br>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+						PUT https://DomainName/api/v1/tellers/{tellerId}/cashiers/{cashierId}
+					</code>
+
+					</code>
+					<code class="method-request">
+						PUT tellers/1/cashiers/1
+						{
+						"endDate":"25 February 2015",
+						"description":"Cashier updated.",
+						"isFullDay":true,
+						"staffId":4,
+						"locale":"en",
+						"dateFormat":"dd MMMM yyyy",
+						"startDate":"01 February 2015"
+						}
+					</code>
+					<code class="method-response">
+						{
+						"resourceId": 1,
+						"subResourceId": 1,
+						"changes": {
+						"description": "Cashier updated.",
+						"endDate": "25 February 2015",
+						"dateFormat": "dd MMMM yyyy",
+						"locale": "en"
+						}
+						}
+					</code>
+				</div>
+			</div>
+
+			<a id="deletecashier" name="deletecashier"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Delete Cashier</h4>
+					<p></p>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+						DELETE tellers/{tellerId}/cashiers/{cashierId}
+					</code>
+					<code class="method-request">
+						DELETE tellers/1/cashiers/3
+						Content-Type: application/json
+						Request Body:
+						{
+						}
+					</code>
+					<code class="method-response">
+						{
+						"resourceId": 3
+						}
+					</code>
+				</div>
+			</div>
+
+			<a id="cashiertemplate" name="cashiertemplate"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Find Cashiers</h4>
+					<p></p><br>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+						GET https://DomainName/api/v1/tellers/{tellerId}/cashiers/template
+					</code>
+					<code class="method-response">
+						{
+						"tellerId":1,
+						"officeId":1,
+						"officeName":"Head Office",
+						"tellerName":"Teller1",
+						"staffOptions":[
+						{
+						"id":1,
+						"displayName":"Staff1, Test"
+						},
+						{
+						"id":2,
+						"displayName":"Staff, 2"
+						},
+						{
+						"id":3,
+						"displayName":"Staff, 3"
+						}
+						]
+						}
+					</code>
+				</div>
+			</div>
+
+
+			<a id="transactionsForCashier" name="transactionsForCashier"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Retrieve Cashier Transaction</h4>
+					<p></p><br>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+						GET https://DomainName/api/v1/tellers/{tellerId}/cashiers/{cashierId}/transactions
+					</code>
+					<code class="method-response">
+						[
+						{
+						"id": 8,
+						"cashierId": 15,
+						"txnType": {
+						"id": 104,
+						"value": "Cash Out"
+						},
+						"txnAmount": 10000,
+						"txnDate": "Feb 25, 2015 12:00:00 AM",
+						"entityId": 2,
+						"entityType": "loans",
+						"txnNote": "Disbursement, Loan:2-000000002,Client:1-Test 1",
+						"createdDate": "Feb 25, 2015 12:00:00 AM",
+						"officeId": 1,
+						"officeName": "Head Office",
+						"tellerId": 0,
+						"cashierName": "B, Ramesh"
+						},
+						{
+						"id": 10,
+						"cashierId": 15,
+						"txnType": {
+						"id": 104,
+						"value": "Cash Out"
+						},
+						"txnAmount": 8500,
+						"txnDate": "Feb 25, 2015 12:00:00 AM",
+						"entityId": 3,
+						"entityType": "loans",
+						"txnNote": "Disbursement, Loan:3-000000003,Client:3-Client 1",
+						"createdDate": "Feb 25, 2015 12:00:00 AM",
+						"officeId": 1,
+						"officeName": "Head Office",
+						"tellerId": 0,
+						"cashierName": "B, Ramesh"
+						},
+						{
+						"id": 12,
+						"cashierId": 15,
+						"txnType": {
+						"id": 104,
+						"value": "Cash Out"
+						},
+						"txnAmount": 10000,
+						"txnDate": "Feb 1, 2015 12:00:00 AM",
+						"entityId": 4,
+						"entityType": "loans",
+						"txnNote": "Disbursement, Loan:4-000000004,Client:4-Client 2",
+						"createdDate": "Feb 25, 2015 12:00:00 AM",
+						"officeId": 1,
+						"officeName": "Head Office",
+						"tellerId": 0,
+						"cashierName": "B, Ramesh"
+						},
+						{
+						"id": 14,
+						"cashierId": 15,
+						"txnType": {
+						"id": 103,
+						"value": "Cash In"
+						},
+						"txnAmount": 1266.52,
+						"txnDate": "Feb 1, 2015 12:00:00 AM",
+						"entityId": 4,
+						"entityType": "loans",
+						"txnNote": "Repayment, Loan:4-000000004,Client:4-Client 2",
+						"createdDate": "Feb 25, 2015 12:00:00 AM",
+						"officeId": 1,
+						"officeName": "Head Office",
+						"tellerId": 0,
+						"cashierName": "B, Ramesh"
+						},
+						{
+						"id": 13,
+						"cashierId": 15,
+						"txnType": {
+						"id": 101,
+						"value": "Allocate Cash"
+						},
+						"txnAmount": 50000,
+						"txnDate": "Feb 1, 2015 12:00:00 AM",
+						"entityId": 0,
+						"entityType": "",
+						"txnNote": "cash allocated on 1st Feb 2015",
+						"createdDate": "Feb 25, 2015 12:00:00 AM",
+						"officeId": 1,
+						"officeName": "Head Office",
+						"tellerId": 10,
+						"tellerName": "Ramesh(Teller/Cashier)",
+						"cashierName": "B, Ramesh"
+						},
+						{
+						"id": 15,
+						"cashierId": 15,
+						"txnType": {
+						"id": 104,
+						"value": "Cash Out"
+						},
+						"txnAmount": 10000,
+						"txnDate": "Feb 1, 2015 12:00:00 AM",
+						"entityId": 5,
+						"entityType": "loans",
+						"txnNote": "Disbursement, Loan:5-000000005,Client:5-Suresh D",
+						"createdDate": "Feb 25, 2015 12:00:00 AM",
+						"officeId": 1,
+						"officeName": "Head Office",
+						"tellerId": 0,
+						"cashierName": "B, Ramesh"
+						},
+						{
+						"id": 17,
+						"cashierId": 15,
+						"txnType": {
+						"id": 103,
+						"value": "Cash In"
+						},
+						"txnAmount": 1266.52,
+						"txnDate": "Feb 1, 2015 12:00:00 AM",
+						"entityId": 5,
+						"entityType": "loans",
+						"txnNote": "Repayment, Loan:5-000000005,Client:5-Suresh D",
+						"createdDate": "Feb 25, 2015 12:00:00 AM",
+						"officeId": 1,
+						"officeName": "Head Office",
+						"tellerId": 0,
+						"cashierName": "B, Ramesh"
+						},
+						{
+						"id": 14,
+						"cashierId": 15,
+						"txnType": {
+						"id": 102,
+						"value": "Settle Cash"
+						},
+						"txnAmount": 10000,
+						"txnDate": "Feb 1, 2015 12:00:00 AM",
+						"entityId": 0,
+						"entityType": "",
+						"txnNote": "cash settlement on 1 feb  with 10k",
+						"createdDate": "Feb 25, 2015 12:00:00 AM",
+						"officeId": 1,
+						"officeName": "Head Office",
+						"tellerId": 10,
+						"tellerName": "Ramesh(Teller/Cashier)",
+						"cashierName": "B, Ramesh"
+						}
+						]
+					</code>
+				</div>
+			</div>
+
+			<!--
+                        <a id="cashiertemplate" name="cashiertemplate"
+                           class="old-syle-anchor">&nbsp;</a>
+                        <div class="method-section">
+                            <div class="method-description">
+                                <h4>Find Cashiers</h4>
+                                <p></p><br>
+                            </div>
+                            <div class="method-example">
+                                <code class="method-declaration">
+            GET https://DomainName/api/v1/tellers/{tellerId}/cashiers/template
+                                </code>
+                                <code class="method-response">
+            {
+            "tellerId":1,
+            "officeId":1,
+            "officeName":"Head Office",
+            "tellerName":"Teller1",
+            "staffOptions":[
+            {
+            "id":1,
+            "displayName":"Staff1, Test"
+            },
+            {
+            "id":2,
+            "displayName":"Staff, 2"
+            },
+            {
+            "id":3,
+            "displayName":"Staff, 3"
+            }
+            ]
+            }
+                                </code>
+                            </div>
+                        </div>-->
+
+			<a id="allocateCashToCashier" name="allocateCashToCashier"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Allocate Cash To Cashier</h4>
+					<p>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Mandatory Fields</div></td>
+						</tr>
+						<tr class=alt>
+							<td>Date, Amount, Currency, Notes/Comments</td>
+						</tr>
+					</table>
+					</p><br>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+						POST https://DomainName/api/v1/tellers/{tellerId}/cashiers/{cashierId}/allocate
+					</code>
+					<code class="method-request">
+						POST tellers/1/cashiers/1/allocate?command=allocate
+						{
+						"currencyCode":"USD",
+						"txnAmount":"5000",
+						"txnNote":"allocating cash",
+						"locale":"en",
+						"dateFormat":"dd MMMM yyyy",
+						"txnDate":"01 February 2015"
+						}
+					</code>
+					<code class="method-response">
+						{
+						"resourceId":1,
+						"subResourceId":4
+						}
+					</code>
+				</div>
+			</div>
+
+
+			<a id="settleCashFromCashier" name="settleCashFromCashier"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Settle Cash From Cashier</h4>
+					<p>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Mandatory Fields</div></td>
+						</tr>
+						<tr class=alt>
+							<td>Date, Amount, Currency, Notes/Comments</td>
+						</tr>
+					</table>
+					</p><br>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+						POST https://DomainName/api/v1/tellers/{tellerId}/cashiers/{cashierId}/settle
+					</code>
+					<code class="method-request">
+						POST tellers/1/cashiers/1/settle?command=settle
+						{
+						"currencyCode":"USD",
+						"txnAmount":"2000",
+						"txnNote":"cash settlement",
+						"locale":"en",
+						"dateFormat":"dd MMMM yyyy",
+						"txnDate":"20 February 2015"
+						}
+					</code>
+					<code class="method-response">
+						{
+						"resourceId":1,
+						"subResourceId":5
+						}
+					</code>
+				</div>
+			</div>
+
+			<a id="getTransactionsWtihSummaryForCashier" name="getTransactionsWtihSummaryForCashier"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Transactions Wtih Summary For Cashier</h4>
+					<p></p><br>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+						GET https://DomainName/api/v1/tellers/{tellerId}/cashiers/{cashierId}/summaryandtransactions
+					</code>
+					<code class="method-response">
+						{
+						"sumCashAllocation":7000.000000,
+						"sumInwardCash":0,
+						"sumOutwardCash":0,
+						"sumCashSettlement":50.000000,
+						"netCash":6950.000000,
+						"officeName":"Head Office",
+						"tellerId":1,
+						"tellerName":"Teller1",
+						"cashierId":1,
+						"cashierName":"Staff1, Test",
+						"cashierTransactions":[
+						{
+						"id":2,
+						"cashierId":1,
+						"txnType":{
+						"id":101,
+						"value":"Allocate Cash"
+						},
+						"txnAmount":2000.000000,
+						"txnDate":"Feb 20, 2015 12:00:00 AM",
+						"entityId":0,
+						"entityType":"",
+						"txnNote":"aaaa",
+						"createdDate":"Feb 20, 2015 12:00:00 AM",
+						"officeId":1,
+						"officeName":"Head Office",
+						"tellerId":1,
+						"tellerName":"Teller1",
+						"cashierName":"Staff1, Test"
+						},
+						{
+						"id":3,
+						"cashierId":1,
+						"txnType":{
+						"id":102,
+						"value":"Settle Cash"
+						},
+						"txnAmount":50.000000,
+						"txnDate":"Feb 20, 2015 12:00:00 AM",
+						"entityId":0,
+						"entityType":"",
+						"txnNote":"bbbbbb",
+						"createdDate":"Feb 20, 2015 12:00:00 AM",
+						"officeId":1,
+						"officeName":"Head Office",
+						"tellerId":1,
+						"tellerName":"Teller1",
+						"cashierName":"Staff1, Test"
+						},
+						{
+						"id":4,
+						"cashierId":1,
+						"txnType":{
+						"id":101,
+						"value":"Allocate Cash"
+						},
+						"txnAmount":5000.000000,
+						"txnDate":"Feb 1, 2015 12:00:00 AM",
+						"entityId":0,
+						"entityType":"",
+						"txnNote":"allocating cash",
+						"createdDate":"Feb 23, 2015 12:00:00 AM",
+						"officeId":1,
+						"officeName":"Head Office",
+						"tellerId":1,
+						"tellerName":"Teller1",
+						"cashierName":"Staff1, Test"
+						}
+						]
+						}
+					</code>
+				</div>
+			</div>
+
+
+			<a id="retrieveCashierTxnTemplate" name="retrieveCashierTxnTemplate"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Retrieve Cashier Transaction Template</h4>
+					<p></p><br>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+						GET https://DomainName/api/v1/tellers/{tellerId}/cashiers/{cashierId}/transactions/template
+					</code>
+					<code class="method-response">
+						{
+						"cashierId":1,
+						"officeName":"Head Office",
+						"tellerId":1,
+						"tellerName":"Teller1",
+						"cashierName":"Staff1, Test",
+						"cashierData":{
+						"id":1,
+						"tellerId":1,
+						"staffId":1,
+						"description":"",
+						"startDate":"Feb 20, 2015 12:00:00 AM",
+						"endDate":"Feb 27, 2015 12:00:00 AM",
+						"isFullDay":true,
+						"startTime":"",
+						"endTime":"",
+						"tellerName":"Teller1",
+						"staffName":"Staff1, Test"
+						},
+						"startDate":"Feb 20, 2015 12:00:00 AM",
+						"endDate":"Feb 27, 2015 12:00:00 AM",
+						"currencyOptions":[
+						{
+						"code":"USD",
+						"name":"US Dollar",
+						"decimalPlaces":2,
+						"displaySymbol":"$",
+						"nameCode":"currency.USD",
+						"displayLabel":"US Dollar ($)"
+						}
+						]
+						}
+					</code>
+				</div>
+			</div>
+
+
+
+
+			<!-- end of Teller Cash Management API docs -->
+			<!--Start of Payment type API docs-->
+			<a id="paymenttype" name="paymenttype" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h3>Payment Type</h3>
+					<p>This defines the payment type
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Field Descriptions</div></td>
+						</tr>
+						<tr class=alt>
+							<td>name</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Name the payment type
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>description</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>
+								Description of payment type
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>isCashPayment</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>
+								Determines weather the payment type is cash or not.
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>position</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>
+								Can set the order in which the payment type should be displayed.
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<a id="create_paymenttype" name="create_paymenttype"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Create a Payment Type</h4>
+					<p>Creates a new Payment type</p>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Mandatory Fields</div></td>
+						</tr>
+						<tr class=alt>
+							<td>name</td>
+						</tr>
+					</table>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Optional Fields</div></td>
+						</tr>
+						<tr class=alt>
+							<td>Description, isCashPayment,Position</td>
+						</tr>
+					</table>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+					POST https://DomainName/api/v1/paymenttypes
+					</code>
+					<code class="method-request">
+					POST paymenttype
+					Content-Type: application/json
+					Request Body:
+					{
+					"name":"cash",
+					"description":"cash payment type",
+					"isCashPayment":true,
+					"position":1
+					}
+					</code>
+					<code class="method-response">
+					{
+					"resourceId": 1
+					}
+					</code>
+				</div>
+			</div>
+			<a id="paymenttype_list" name="paymenttype_list"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Retrieve all Payment Types</h4>
+					<p>Retrieve list of payment types </p>
+
+
+					<br>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+					GET https://DomainName/api/v1/paymenttypes
+					</code>
+					<code class="method-response">
+					[
+					{
+					"id": 24,
+					"name": "PTC",
+					"description": "Cash",
+					"isCashPayment": true,
+					"position": 0
+					},
+					{
+					"id": 25,
+					"name": "mPay",
+					"description": "not chash payment",
+					"isCashPayment": false,
+					"position": 0
+					},
+					{
+					"id": 26,
+					"name": "mPesa",
+					"description": "non cash payment",
+					"isCashPayment": false,
+					"position": 0
+					},
+					{
+					"id": 27,
+					"name": "Mobile Money",
+					"description": "money transferred through mobile",
+					"isCashPayment": false,
+					"position": 0
+					},
+					{
+					"id": 13,
+					"name": "cash",
+					"description": "cash Payment",
+					"isCashPayment": true,
+					"position": 1
+					}
+					]
+					</code>
+				</div>
+			</div>
+			<a id="paymenttype_retrieve" name="paymenttype_retrieve"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Retrieve a Payment Type</h4>
+					<p>Retrieves a payment type </p>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+					GET https://DomainName/api/v1/paymenttypes/{paymentTypeId}
+					</code>
+					<code class="method-response">
+					{
+					"id": 13,
+					"name": "cash",
+					"description": "cash Payment",
+					"isCashPayment": true,
+					"position": 1
+					}
+					</code>
+				</div>
+			</div>
+			<a id="paymenttype_update" name="paymenttype_update"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Update a Payment Type</h4>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+					PUT https://DomainName/api/v1/paymenttypes/{paymnetTypeId}
+					</code>
+					<code class="method-request">
+					PUT /paymenttypes/13
+					{
+					"name":"mPay",
+					"description":"not a cash payment type",
+					"isCashPayment":false,
+					"position":3
+					}
+					</code>
+					<code class="method-response">
+					{
+					"resourceId": 13
+					}
+					</code>
+				</div>
+			</div>
+			<a id="paymnettype_delete" name="paymnettype_delete"
+			   class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Delete a Payment Type</h4>
+					<p>Deletes payment type</p>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+					DELETE https://DomainName/api/v1/paymenttypes/{paymentTypeId}
+					</code>
+					<code class="method-request">
+					DELETE paymnettypes/13
+					Content-Type: application/json
+					No Request Body:
+					</code>
+					<code class="method-response">
+					{
+					"resourceId": 13
+					}
+					</code>
+				</div>
+			</div>
+		<!--End of Payment Type API docs-->
+
+
+
 		<!-- start of clients api docs -->
 		<a id="templates" name="clients" class="old-syle-anchor">&nbsp;</a>
 		<div class="method-section">
@@ -33762,7 +35990,684 @@ Request Body:
 					</code>
 				</div>
 			</div>
+			
+			
+<!----------------Client charge API starts ------------>
 
+          <a id="client_charge" name="client_charge" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h3>Client Charges</h3>
+					<p>It is typical for MFI's to directly associate charges with an implicit Client account. These
+					can be either fees or penalties</p>
+					<p>Client Charges are client specific instances of <a href="#charges">Charges</a>.  Refer <a href="#charges">Charges</a> for documentation of the various properties of a charge, Only additional properties (
+					specific to the context of a Charge being associated with a Client account) are
+					described here</p>
+
+					</p>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Field Descriptions</div></td>
+						</tr>
+						<tr class=alt>
+							<td>amountPaid</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>The total amount which has been paid for this Charge
+						</td>
+						</tr>
+						<tr class=alt>
+							<td>amountWaived</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>The total amount that has been waived for this Charge
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>amountOutstanding</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>The Total outstanding amount for this Charge
+							</td>
+						</tr>
+
+						<tr class=alt>
+							<td>dueDate</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>it specifies the due date</td>
+						</tr>
+						
+					</table>
+				</div>
+			</div>
+			
+			<a id="client_transaction" name="client_transaction" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h3>Client Transaction</h3>
+					<p>Client Transactions refer to transactions made directly againt a Client's internal account. Currently, these transactions are only created as a result of charge payments/waivers. You are allowed to undo a transaction, however you cannot explicitly create one.
+					</p>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Field Descriptions</div></td>
+						</tr>
+						<tr class=alt>
+							<td>id</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>This ia an unique Id associate with a Transaction.
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>officeId</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Identifier of the office in which the transaction was made</td>
+						</tr>
+						<tr class=alt>
+							<td>reversed</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Boolean Flag that indicates if this transaction is reversed.
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>amount</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Transaction amount</b>.
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>currency</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Details of the currency involved with the Transaction. Currently defaults
+							to the currency of the Client Charge this transaction pays </td>
+						</tr>
+						<tr class=alt>
+							<td>date</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Effective date of the transaction</td>
+						</tr>
+					
+					</table>
+				</div>
+			</div>
+			<a id="list_clientTransactions" name="list_clientTransactions" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>List Client Transactions</h4>
+					<p>The <i>list</i> capability of client transaction can support <b>pagination</b>.</p>
+					<h5>Mandatory Arguments</h5>
+					<dl class="argument-list">
+						<dt>offset</dt>
+						<dd>
+							Integer <span>Mandatory</span>, defaults to 0
+						</dd>
+						<dd>Indicates the result from which pagination starts</dd>
+
+						<dt>limit</dt>
+						<dd>
+							Integer <span>Mandatory</span>, defaults to 200
+						</dd>
+						<dd>Restricts the size of results returned. To override the default and return all entries you must explicitly pass a non-positive integer value for limit e.g. limit=0, or limit=-1</dd>
+            		</dl>
+					<p>Example Requests:</p>				
+					<div class=apiClick>clients/189/transactions</div>
+					<div class=apiClick>clients/189/transactions?offset=10&limit=50</div>				
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+GET https://DomainName/api/v1/clients/{clientId}/transactions?limit=5&offset=0
+					</code>
+					<code class="method-request">
+GET clients/226/transactions?limit=5&offset=0
+Content-Type: application/json
+No Request Body:
+
+			</code>
+			<code class="method-response">
+{
+  "totalFilteredRecords": 20,
+  "pageItems": [
+    {
+      "id": 226,
+      "officeId": 1,
+      "officeName": "Head Office",
+      "type": {
+        "id": 1,
+        "code": "clientTransactionType.payCharge",
+        "value": "PAY_CHARGE"
+      },
+      "date": [
+        2015,
+        9,
+        2
+      ],
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "amount": 22,
+      "submittedOnDate": [
+        2015,
+        9,
+        2
+      ],
+      "reversed": false
+    }
+  ]
+}
+</code>
+				</div>
+			</div>
+
+			<a id="clienttransactions_retrieve" name="clienttransactions_retrieve" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Retrieve a Client Transaction</h4>
+					<p>Example Requests:</p>
+					<div class=apiClick>clients/1/transactions/1</div>
+					<br>
+					<br>
+					<div class=apiClick>clients/1/transactions/1?fields=id,officeName</div>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+GET https://DomainName/api/v1/clients/{clientId}/transaction/{transactionId}
+					</code>
+					<code class="method-response">
+{
+  "id": 1,
+  "officeId": 1,
+  "officeName": "Head Office",
+  "type": {
+    "id": 1,
+    "code": "clientTransactionType.payCharge",
+    "value": "PAY_CHARGE"
+  },
+  "date": [
+    2015,
+    8,
+    17
+  ],
+  "currency": {
+    "code": "USD",
+    "name": "US Dollar",
+    "decimalPlaces": 2,
+    "displaySymbol": "$",
+    "nameCode": "currency.USD",
+    "displayLabel": "US Dollar ($)"
+  },
+  "amount": 60.000000,
+  "submittedOnDate": [
+    2015,
+    8,
+    19
+  ],
+  "reversed": true
+}
+					</code>
+				</div>
+			</div>
+
+			<a id="add_clientCharge" name="add_clientCharge" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Add Client Charge</h4>
+					<p>
+						This API associates a Client charge with an implicit Client account
+					</p>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Mandatory Fields</div></td>
+						</tr>
+						<tr class=alt>
+							<td>chargeId and dueDate </td>
+						</tr>
+					</table>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Optional Fields</div></td>
+						</tr>
+						<tr class=alt>
+							<td>amount</td>
+						</tr>
+					</table>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+POST https://DomainName/api/v1/clients/{clientId}/charges
+					</code>
+					<code class="method-request">
+POST clients/226/charges
+Content-Type: application/json
+Request Body:
+{
+    "amount" : "100",
+	"chargeId" : "226",
+	"dateFormat" : "dd MMMM yyyy",
+	"dueDate" : "01 September 2015",
+	"locale" : "en"
+}
+			</code>
+			<code class="method-response">
+{
+  "officeId": 1,
+  "clientId": 189,
+  "resourceId":164
+}
+					</code>
+				</div>
+			</div>
+			<a id="list_clientCharges" name="list_clientCharges" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>List Client Charges</h4>
+						
+					<p>The <i>list</i> capability of client charges supports <b>pagination</b>.</p>
+					<h5>Optional Arguments</h5>
+					<dl class="argument-list">
+						<dt>offset</dt>
+						<dd>
+							Integer <span>Mandatory</span>, defaults to 0
+						</dd>
+						<dd>Indicates the result from which pagination starts</dd>
+
+						<dt>limit</dt>
+						<dd>
+							Integer <span>Mandatory</span>, defaults to 200
+						</dd>
+						<dd>Restricts the size of results returned. To override the default and return all entries you must explicitly pass a non-positive integer value for limit e.g. limit=0, or limit=-1</dd>
+
+						<dt>pendingPayment</dt>
+						<dd>
+							String <span>optional</span>
+						</dd>
+						<dd> Filters charges that are pending payment (neither paid or waived).</dd>
+          			</dl>
+					<p>Example Requests:</p>				
+					<div class=apiClick>clients/1/charges</div>	
+					<div class=apiClick>clients/1/charges?offset=0&limit=5</div>				
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+GET https://DomainName/api/v1/clients/{clientId}/charges?limit=5&offset=0
+					</code>
+					<code class="method-request">
+GET clients/1/charges?limit=5&offset=0
+Content-Type: application/json
+No Request Body
+            		</code>
+					<code class="method-response">	
+{
+  "totalFilteredRecords": 4,
+  "pageItems": [
+    {
+      "id": 5,
+      "clientId": 1,
+      "chargeId": 6,
+      "name": "Client Fees 2",
+      "chargeTimeType": {
+        "id": 2,
+        "code": "chargeTimeType.specifiedDueDate",
+        "value": "Specified due date"
+      },
+      "dueDate": [
+        2015,
+        9,
+        1
+      ],
+      "chargeCalculationType": {
+        "id": 1,
+        "code": "chargeCalculationType.flat",
+        "value": "Flat"
+      },
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "amount": 550.000000,
+      "amountPaid": 0.000000,
+      "amountWaived": 0.000000,
+      "amountWrittenOff": 0,
+      "amountOutstanding": 550.000000,
+      "penalty": false,
+      "isActive": true,
+      "isPaid": false,
+      "isWaived": false
+    },
+    {
+      "id": 4,
+      "clientId": 1,
+      "chargeId": 5,
+      "name": "Client Fee 1",
+      "chargeTimeType": {
+        "id": 2,
+        "code": "chargeTimeType.specifiedDueDate",
+        "value": "Specified due date"
+      },
+      "dueDate": [
+        2015,
+        8,
+        31
+      ],
+      "chargeCalculationType": {
+        "id": 1,
+        "code": "chargeCalculationType.flat",
+        "value": "Flat"
+      },
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "amount": 120.000000,
+      "amountPaid": 0.000000,
+      "amountWaived": 120.000000,
+      "amountWrittenOff": 0,
+      "amountOutstanding": 120.000000,
+      "penalty": true,
+      "isActive": true,
+      "isPaid": false,
+      "isWaived": true
+    },
+    {
+      "id": 3,
+      "clientId": 1,
+      "chargeId": 5,
+      "name": "Client Fee 1",
+      "chargeTimeType": {
+        "id": 2,
+        "code": "chargeTimeType.specifiedDueDate",
+        "value": "Specified due date"
+      },
+      "dueDate": [
+        2015,
+        8,
+        17
+      ],
+      "chargeCalculationType": {
+        "id": 1,
+        "code": "chargeCalculationType.flat",
+        "value": "Flat"
+      },
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "amount": 100.000000,
+      "amountPaid": 0.000000,
+      "amountWaived": 100.000000,
+      "amountWrittenOff": 0,
+      "amountOutstanding": 0.000000,
+      "penalty": true,
+      "isActive": true,
+      "isPaid": false,
+      "isWaived": true
+    },
+    {
+      "id": 2,
+      "clientId": 1,
+      "chargeId": 2,
+      "name": "Recurring savings Charge",
+      "chargeTimeType": {
+        "id": 7,
+        "code": "chargeTimeType.monthlyFee",
+        "value": "Monthly Fee"
+      },
+      "dueDate": [
+        2015,
+        8,
+        17
+      ],
+      "chargeCalculationType": {
+        "id": 1,
+        "code": "chargeCalculationType.flat",
+        "value": "Flat"
+      },
+      "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+      "amount": 100.000000,
+      "amountPaid": 0,
+      "amountWaived": 100.000000,
+      "amountWrittenOff": 0,
+      "amountOutstanding": 0.000000,
+      "penalty": false,
+      "isActive": true,
+      "isPaid": false,
+      "isWaived": true
+    }
+  ]
+}		
+ 
+					</code>
+				</div>
+			</div>
+					<a id="clientcharges_retrieve" name="clientcharges_retrieve" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Retrieve a Client Charge</h4>
+					<h5>Arguments</h5>
+					<dl class="argument-list">
+						<dt>associations</dt>
+						<dd>
+							optional, <span>Either 'all' or a comma separated list of
+								loan 'associations' (itemised below).</span>
+						</dd>
+						<dd>
+							<br>Associations are just extra pieces of data that you
+							might or might not want to retrieve.<br>
+							<br>
+						</dd>
+						<dd>
+							<b>'all':</b> Gets all association data.
+						</dd>
+						<dd>
+							<b>'transactions':</b> Retrieves all transactions made on this client charge.
+						</dd>
+					</dl>
+					<p>Example Requests:</p>
+					<div class=apiClick>clients/1/charges/1</div>
+					<br>
+					<br>
+					<div class=apiClick>clients/1/charges/1?fields=name,id</div>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+GET https://DomainName/api/v1/clients/{clientId}/charges/{clientChargeId}
+					</code>
+					<code class="method-response">
+{
+  "id": 3,
+  "clientId": 1,
+  "chargeId": 5,
+  "name": "Client Fee 1",
+  "chargeTimeType": {
+    "id": 2,
+    "code": "chargeTimeType.specifiedDueDate",
+    "value": "Specified due date"
+  },
+  "dueDate": [
+    2015,
+    8,
+    17
+  ],
+  "chargeCalculationType": {
+    "id": 1,
+    "code": "chargeCalculationType.flat",
+    "value": "Flat"
+  },
+  "currency": {
+    "code": "USD",
+    "name": "US Dollar",
+    "decimalPlaces": 2,
+    "displaySymbol": "$",
+    "nameCode": "currency.USD",
+    "displayLabel": "US Dollar ($)"
+  },
+  "amount": 100.000000,
+  "amountPaid": 0.000000,
+  "amountWaived": 100.000000,
+  "amountWrittenOff": 0,
+  "amountOutstanding": 0.000000,
+  "penalty": true,
+  "isActive": true,
+  "isPaid": false,
+  "isWaived": true
+}
+					</code>
+				</div>
+			</div>	
+			
+        <a id="delete_clientCharge" name="delete_clientCharge" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Delete a Client Charge</h4>
+					<p>
+					Deletes a Client Charge on which no transactions have taken place (either payments or waivers).				</p>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">				
+DELETE  https://DomainName/api/v1/clients/{clientId}/charges/{clientChargeId}
+					</code>
+					<code class="method-request">
+POST clients/189/charges/164
+Content-Type: application/json
+No Request Body
+            </code>
+			<code class="method-response">
+{
+  "officeId": 1,
+  "clientId": 189,
+  "resourceId":164
+}
+					</code>
+				</div>
+			</div>
+			<a id="pay_clientCharge" name="pay_clientCharge" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Pay a Client Charge</h4>
+					<p>
+						<br>Pay either a part of or the entire due amount for a charge.						
+					</p>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="mifosXHeading2">Mandatory Fields</div></td>
+						</tr>
+						<tr >
+						<td>
+							transactionDate and amount
+							</td>
+						</tr>
+					</table>
+						<br />					
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">					
+POST https://DomainName/api/v1/clients/{clientId}/charges/{clientChargeId}?command=paycharge
+					</code>
+					<code class="method-request">
+POST clients/189/charges/157?command=payCharge
+Content-Type: application/json
+Request Body:
+{
+
+ "amount":200,
+ "locale":"en",
+ "dateFormat":"dd MMMM yyyy",
+ "transactionDate":"01 September 2015"
+}
+			</code>
+			<code class="method-response">
+			
+{
+  "officeId":1,
+  "clientId":189,
+  "resourceId":157,
+  "transactionId":"221"
+}
+					</code>
+				</div>
+			</div>
+          <a id="waive_clientCharge" name="waive_clientCharge" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Waive a Client Charge</h4>
+					<p>
+						<br>This API provides the facility of waiving off the remaining amount on a client charge						
+					</p>
+								
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">					
+POST https://DomainName/api/v1/clients/{clientId}/charges/{clientChargeId}?command=waive
+					</code>
+					<code class="method-request">
+POST clients/189/charges/157?command=waive						
+Content-Type: application/json
+No Request Body
+			</code>
+			<code class="method-response">
+			
+{
+ 	"clientId":"189",
+	"resourceId":157
+}
+					</code>
+				</div>
+			</div>
+			
+           <a id="revert_clientCharge" name="revert_clientCharge" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Undo a Client Transaction</h4>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">					
+POST https://DomainName/api/v1/clients/{clientId}/transactions/{transactionId}?command=undo
+					</code>
+					<code class="method-request">
+POST clients/189/transactions/222?command=undo					
+Content-Type: application/json
+No Request Body
+					</code>
+					<code class="method-response">
+			
+{
+"officeId":1,
+"clientId":189,
+"resourceId":222
+}
+					</code>
+				</div>
+			</div>			
+<!-- End of Client Transactions -->			
 			<a id="resources_deletetemplate" name="resources_deletetemplate"
 				class="old-syle-anchor">&nbsp;</a>
 			<div class="method-section">
@@ -34731,6 +37636,26 @@ No Request Body:
 					<td></td>
 					<td><a href="#staff_retrieve">Retrieve a Staff Member</a></td>
 					<td><a href="#staff_update">Update a Staff Member</a></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><a href="#client_images">Staff Images</a></td>
+					<td>staff/{staffId}/images</td>
+					<td><a href="#client_images_create">Upload an Image for a Staff Member (as  DATA URI)</a></td>
+					<td><a href="#client_images_retrieve">Get Staff Image (DATA URI)</a></td>
+					<td><a href="#client_images_update">Update Staff Image (DATA URI)</a></td>
+					<td><a href="#client_images_delete">Delete Staff Image</a></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td><a href="#client_images_create_form">
+						Upload an Image for a Staff Member (Multi-part form data)</a>
+					</td>
+					<td><a href="#client_images_retrieve_binary">Get Staff Image (Binary file)</a></td>
+					<td><a href="#client_images_update_form">
+						Update Staff Image (Multi-part form data)</a>
+					</td>
 					<td></td>
 				</tr>
 				<tr>

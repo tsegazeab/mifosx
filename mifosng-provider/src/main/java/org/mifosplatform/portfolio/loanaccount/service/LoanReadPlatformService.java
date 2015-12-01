@@ -5,6 +5,7 @@
  */
 package org.mifosplatform.portfolio.loanaccount.service;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 
@@ -30,7 +31,7 @@ public interface LoanReadPlatformService {
     LoanAccountData retrieveOne(Long loanId);
 
     LoanScheduleData retrieveRepaymentSchedule(Long loanId, RepaymentScheduleRelatedLoanData repaymentScheduleRelatedData,
-            Collection<DisbursementData> disbursementData, boolean isInterestRecalculationEnabled);
+            Collection<DisbursementData> disbursementData, boolean isInterestRecalculationEnabled, BigDecimal totalPaidFeeCharges);
 
     Collection<LoanTransactionData> retrieveLoanTransactions(Long loanId);
 
@@ -96,7 +97,7 @@ public interface LoanReadPlatformService {
 
     Collection<Long> fetchArrearLoans();
 
-    LoanTransactionData retrieveLoanPrePaymentTemplate(Long loanId);
+    LoanTransactionData retrieveLoanPrePaymentTemplate(Long loanId, LocalDate onDate);
 
     Collection<LoanTransactionData> retrieveWaiverLoanTransactions(Long loanId);
 

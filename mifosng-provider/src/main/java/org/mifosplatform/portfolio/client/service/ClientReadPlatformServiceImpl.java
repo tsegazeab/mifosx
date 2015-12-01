@@ -176,7 +176,7 @@ public class ClientReadPlatformServiceImpl implements ClientReadPlatformService 
 
         if (displayName != null) {
             extraCriteria += " and concat(ifnull(c.firstname, ''), if(c.firstname > '',' ', '') , ifnull(c.lastname, '')) like "
-                    + ApiParameterHelper.sqlEncodeString(displayName);
+                    + ApiParameterHelper.sqlEncodeString("%" + displayName + "%");
         }
 
         if (firstname != null) {
@@ -189,6 +189,10 @@ public class ClientReadPlatformServiceImpl implements ClientReadPlatformService 
 
         if (searchParameters.isScopedByOfficeHierarchy()) {
             extraCriteria += " and o.hierarchy like " + ApiParameterHelper.sqlEncodeString(searchParameters.getHierarchy() + "%");
+        }
+        
+        if(searchParameters.isOrphansOnly()){
+        	extraCriteria += " and c.id NOT IN (select client_id from m_group_client) ";
         }
 
         if (StringUtils.isNotBlank(extraCriteria)) {
@@ -559,7 +563,7 @@ public class ClientReadPlatformServiceImpl implements ClientReadPlatformService 
     private static final class ParentGroupsMapper implements RowMapper<GroupGeneralData> {
 
         public String parentGroupsSchema() {
-            return "gp.id As groupId , gp.display_name As groupName from m_client cl JOIN m_group_client gc ON cl.id = gc.client_id "
+            return "gp.id As groupId , gp.account_no as accountNo, gp.display_name As groupName from m_client cl JOIN m_group_client gc ON cl.id = gc.client_id "
                     + "JOIN m_group gp ON gp.id = gc.group_id WHERE cl.id  = ?";
         }
 
@@ -568,8 +572,9 @@ public class ClientReadPlatformServiceImpl implements ClientReadPlatformService 
 
             final Long groupId = JdbcSupport.getLong(rs, "groupId");
             final String groupName = rs.getString("groupName");
+            final String accountNo = rs.getString("accountNo");
 
-            return GroupGeneralData.lookup(groupId, groupName);
+            return GroupGeneralData.lookup(groupId, accountNo, groupName);
         }
     }
 

@@ -93,10 +93,21 @@ public class LoanTransactionHelper {
         return Utils.performServerGet(requestSpec, responseSpec, URL, param);
     }
 
+    public String getLoanDetails(final RequestSpecification requestSpec, final ResponseSpecification responseSpec, final Integer loanID) {
+        final String URL = "/mifosng-provider/api/v1/loans/" + loanID + "?associations=all&" + Utils.TENANT_IDENTIFIER;
+        return Utils.performServerGet(requestSpec, responseSpec, URL, null);
+    }
+
     public Object getLoanProductDetail(final RequestSpecification requestSpec, final ResponseSpecification responseSpec,
             final Integer loanProductId, final String jsonAttributeToGetBack) {
         final String URL = "/mifosng-provider/api/v1/loanproducts/" + loanProductId + "?associations=all&" + Utils.TENANT_IDENTIFIER;
         return Utils.performServerGet(requestSpec, responseSpec, URL, jsonAttributeToGetBack);
+    }
+
+    public String getLoanProductDetails(final RequestSpecification requestSpec, final ResponseSpecification responseSpec,
+            final Integer loanProductId) {
+        final String URL = "/mifosng-provider/api/v1/loanproducts/" + loanProductId + "?associations=all&" + Utils.TENANT_IDENTIFIER;
+        return Utils.performServerGet(requestSpec, responseSpec, URL, null);
     }
 
     public ArrayList getLoanCharges(final Integer loanId) {
@@ -192,6 +203,11 @@ public class LoanTransactionHelper {
         return (Integer) response.get("resourceId");
     }
 
+    public Object addChargesForAllreadyDisursedLoan(final Integer loanId, final String request, final ResponseSpecification responseSpecification) {
+        final String ADD_CHARGES_URL = "/mifosng-provider/api/v1/loans/" + loanId + "/charges?" + Utils.TENANT_IDENTIFIER;
+        return Utils.performServerPost(this.requestSpec, responseSpecification, ADD_CHARGES_URL, request, "");
+    }
+    
     public Integer updateChargesForLoan(final Integer loanId, final Integer loanchargeId, final String request) {
         System.out.println("--------------------------------- ADD CHARGES FOR LOAN --------------------------------");
         final String UPDATE_CHARGES_URL = "/mifosng-provider/api/v1/loans/" + loanId + "/charges/" + loanchargeId + "?"
@@ -233,6 +249,7 @@ public class LoanTransactionHelper {
         if (transactionAmount != null) {
             map.put("transactionAmount", transactionAmount);
         }
+        System.out.println("Loan Application disburse request : " + map);
         return new Gson().toJson(map);
     }
 
@@ -520,5 +537,65 @@ public class LoanTransactionHelper {
         map.put("fromOfficeId", "1");
         map.put("locale", "en");
         return new Gson().toJson(map);
+    }
+    
+    public HashMap createTrancheDetail(final String id, final String date, final String amount) {
+        HashMap<String, Object> detail = new HashMap<>();
+        if(id != null){
+            detail.put("id", id);
+        }
+        detail.put("expectedDisbursementDate", date);
+        detail.put("principal", amount);
+
+        return detail;
+    }
+    
+    public Object editDisbursementDetail(final Integer loanID, final Integer disbursementId, final String approvalAmount, final String expectedDisbursementDate, 
+    		final String updatedExpectedDisbursementDate, final String updatedPrincipal, final String jsonAttributeToGetBack) {
+    	
+    	return Utils.performServerPut(this.requestSpec, this.responseSpec, createEditDisbursementURL(loanID, disbursementId), getEditDisbursementsAsJSON(approvalAmount, expectedDisbursementDate, 
+    			updatedExpectedDisbursementDate, updatedPrincipal), jsonAttributeToGetBack);
+    }
+    
+    public Object addAndDeleteDisbursementDetail(final Integer loanID, final String approvalAmount, final String expectedDisbursementDate
+    		, List<HashMap> disbursementData, final String jsonAttributeToGetBack) {
+    	
+    	return Utils.performServerPut(this.requestSpec, this.responseSpec, createAddAndDeleteDisbursementURL(loanID), 
+    			getAddAndDeleteDisbursementsAsJSON(approvalAmount, expectedDisbursementDate, disbursementData), jsonAttributeToGetBack);
+    }
+    
+    private String createEditDisbursementURL(Integer loanID, Integer disbursementId) {
+        return "/mifosng-provider/api/v1/loans/" + loanID + "/disbursements/" + disbursementId + "?" + Utils.TENANT_IDENTIFIER;
+    }
+    
+    private String createAddAndDeleteDisbursementURL(Integer loanID) {
+        return "/mifosng-provider/api/v1/loans/" + loanID + "/disbursements/editDisbursements?" +  Utils.TENANT_IDENTIFIER;
+    }
+    
+    public static String getEditDisbursementsAsJSON(final String approvalAmount, final String expectedDisbursementDate, 
+    		final String updatedExpectedDisbursementDate, final String updatedPrincipal) {
+        final HashMap<String, String> map = new HashMap<>();
+        map.put("locale", "en");
+        map.put("dateFormat", "dd MMMM yyyy");
+        map.put("approvedLoanAmount", approvalAmount);
+        map.put("expectedDisbursementDate", expectedDisbursementDate);
+        map.put("updatedExpectedDisbursementDate", updatedExpectedDisbursementDate);
+        map.put("updatedPrincipal", updatedPrincipal);
+        String json = new Gson().toJson(map);
+        System.out.println(json);
+        return json;
+    }
+    
+    public static String getAddAndDeleteDisbursementsAsJSON(final String approvalAmount, final String expectedDisbursementDate, 
+    		final List<HashMap> disbursementData) {
+        final HashMap map = new HashMap<>();
+        map.put("locale", "en");
+        map.put("dateFormat", "dd MMMM yyyy");
+        map.put("approvedLoanAmount", approvalAmount);
+        map.put("expectedDisbursementDate", expectedDisbursementDate);
+        map.put("disbursementData", disbursementData);
+        String json = new Gson().toJson(map);
+        System.out.println(json);
+        return json;
     }
 }

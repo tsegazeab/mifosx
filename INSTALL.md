@@ -29,11 +29,13 @@ The release artifact (.zip file) has the following structure:
 
 The three ways to get up and running with mifos platform is:
 
-1. The first (and the easiest) method is to just fire up the launch script provided in the release artifact and Mifos takes care of all the database, server-side and client-side setup for you. 
-2. Use Amazon AWS and mifosplatform public AMI to spin up a new instance in the cloud
-3. Manually install the prerequisite software on your own machine, follow setup instructions and use release artifacts to get platform running yourself.
+1. Use Amazon AWS and mifosplatform public AMI to spin up a new instance in the cloud
+2. Manually install the prerequisite software on your own machine, follow setup instructions and use release artifacts to get platform running yourself.
+3. ~~The (and the easiest) method is to just fire up the launch script provided in the release artifact and Mifos takes care of all the database, server-side and client-side setup for you.~~ Currently Broken
 
 ## 1. Launch script automatic out-of-the box setup
+
+Important : Automatic setup is currently broken, please follow the instructions for **Manual Installation** instead. For details of the issue, refer comments at https://mifosforge.jira.com/browse/MIFOSX-1756
 
 The Mifos release artifact contains two launch scripts with names starting with "**runmifosx**". One of them (the one with the *.bat* file extension) is used to launch the platform on a Windows machine while the other (which has the *.sh* file extension) is used to launch the platform on Mac OS X and Linux. Just double-click on the respective script (depending on your OS) and voila! you have your own Mifos X platform running locally on your computer. 
 
@@ -47,7 +49,7 @@ $ ./runmifosx.sh
 
 ## 2. Amazon Public AMI
 
-  Use AWS Wizard to launch instance by using this link: <a target="_blank" href="https://console.aws.amazon.com/ec2/home?region=ap-southeast-1#launchAmi=ami-909bb3c2" title="Latest Mifos Platform Public AMI">Mifos Platform AMI (ami-909bb3c2)</a>
+  Use AWS Wizard to launch instance by using this link: <a target="_blank" href="https://console.aws.amazon.com/ec2/home?region=ap-southeast-1#launchAmi=ami-5ad9d308" title="Latest Mifos Platform Public AMI">Mifos Platform AMI (ami-5ad9d308)</a>
 
   *Note:* Read through the following as you step through the AWS Wizard
   
@@ -62,15 +64,15 @@ $ ./runmifosx.sh
     - Community app should be available @ https://[public DNS]:8443/community-app
     - API docs should be available @ https://[public DNS]:8443/api-docs/apiLive.htm
 
-  *Name:* Mifos Platform 1.26.0.RELEASE Public AMI
+  *Name:* Mifos Platform 15.09.2.RELEASE Public AMI
   
- - AMI ID: ami-909bb3c2
+ - AMI ID: ami-5ad9d308
  - Kernel ID: aki-503e7402
- - Name: Mifos Platform 1.26.0.RELEASE Public AMI
+ - Name: Mifos Platform 15.09.2.RELEASE Public AMI
  - Owner: 239215483039
- - Source: 239215483039/Mifos X-1.26.0 release
+ - Source: 239215483039/Mifos X-15.09.2 release
  - Architecture: Ubuntu12.04 LTS x86_64
- - Built starting from Ubuntu AMI ami-35acbb41
+ - Built starting from Ubuntu AMI ami-5ad9d308
  - Java 1.7.0_51 64 bit JVM
  - Tomcat 7.0.39 (with SSL configured for self-signed certificate)
  - MySql 5.5.31
